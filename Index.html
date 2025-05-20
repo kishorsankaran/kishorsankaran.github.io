@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kishor Sankaran - Document Management Expert</title>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            margin: 20px;
+            background-color: #E2EBF5;
+            color: #000000;
+        }
+
+        h1, h2, h3, h4 {
+            color: #3C3E40;
+            background-color: #A8D0C2;
+            padding: 5px;
+            border: 1px solid #D1DAD7;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            cursor: pointer;
+        }
+
+        h1:hover, h2:hover, h3:hover, h4:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            background-color: #B7D6CB;
+        }
+
+        h3 {
+            margin-top: 30px;
+        }
+
+        .contact-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #D1DAD7;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .contact-section a {
+            color: #266851;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .main-heading-buttons {
+            text-align: center;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background-color: #D1DAD7;
+            z-index: 100;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .main-heading-buttons a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #A8D0C2;
+            color: #0F1010;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #D1DAD7;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .main-heading-buttons a:hover {
+            background-color: #B7D6CB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .download-buttons a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #A8D0C2;
+            color: #5D605F;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #496f8e;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-buttons a:hover {
+            background-color: #B7D6CB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-buttons a img {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .profile-summary {
+            display: flex;
+            flex-wrap: wrap; /* Allows columns to wrap on smaller screens */
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .profile-column {
+            flex-basis: calc(33.33% - 10px); /* Distribute columns evenly with spacing */
+            margin-bottom: 20px; /* Add margin for spacing when wrapped */
+        }
+
+        @media screen and (max-width: 768px) {
+            .profile-column {
+                flex-basis: calc(50% - 10px); /* Two columns on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .profile-column {
+                flex-basis: 100%; /* Single column on small screens */
+            }
+        }
+
+        .profile-column h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .profile-column p {
+            text-align: justify;
+        }
+
+        #blogs {
+            margin-top: 40px;
+            font-size: 24px;
+            color: #3C3E40;
+            background-color: #A8D0C2;
+            padding: 10px;
+            border: 1px solid #D1DAD7;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            cursor: pointer;
+        }
+
+        #blogs:hover {
+            background-color: #B7D6CB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .work-experience-box,
+        .skills-box {
+            background-color: rgba(169, 169, 169, 0.2);
+            margin: 10px; /* Increased margin for better spacing */
+            border-radius: 10px;
+            padding: 15px; /* Increased padding */
+            box-sizing: border-box;
+            width: calc(33.33% - 20px); /* Three columns by default */
+            min-height: 100px; /* Minimum height for consistency */
+            display: flex; /* Use flexbox for content alignment */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text */
+            transition: background-color 0.3s;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .work-experience-box,
+            .skills-box {
+                width: calc(50% - 20px); /* Two columns on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .work-experience-box,
+            .skills-box {
+                width: calc(100% - 20px); /* Single column on smaller screens */
+            }
+        }
+
+        .work-experience-box p,
+        .skills-box p {
+            margin: 5px 0; /* Adjust margin for paragraphs within boxes */
+        }
+
+        .skills-box ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            text-align: left; /* Align list items to the left */
+        }
+
+        .skills-box strong {
+            display: block; /* Make strong tag a block element to center it */
+            margin-bottom: 10px;
+        }
+
+        .section-heading {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .skills-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center; /* Center boxes within the container */
+        }
+
+        .work-experience-box:hover,
+        .skills-box:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        a[href="https://www.blogger.com/blog/posts/4981560877383655004"]:hover {
+            background-color: #E9F1EE;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image styling for responsiveness */
+        .header-image {
+            max-width: 100%; /* Ensures the image doesn't overflow its container */
+    height: auto;    /* Maintains the aspect ratio */
+    margin: 20px auto; /* Centers the image horizontally with some vertical spacing */
+    display: block;  /* Makes the image a block element, allowing margin: auto to work */
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    opacity: 0.8; /* Adjusted opacity for better visibility */
+        }
+    </style>
+</head>
+<body>
+<div class="main-heading-buttons">
+    <a href="javascript:void(0);" onclick="scrollToTop()">Home</a>
+    <a href="#work-experience">Work Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#project-details">Project Details</a>
+    <a href="#hobbies-interests">Hobbies & Interests</a>
+    <a href="#qualification">Qualification</a>
+    <a href="#blogs">Blogs</a>
+    <a href="#contact-section">Contact</a>
+</div>
+
+<h1>Kishor Sankaran - Document Management Expert</h1>
+
+<div class="profile-summary">
+    <div class="profile-column">
+        <h2>About me</h2>
+        <p>
+            I am Kishor Sankaran, hailing from Kerala, India. Currently stationed in Doha, Qatar, I bring forth over 13 years of invaluable expertise as a Document Management Expert. My journey has been marked by honing skills in optimizing information systems, primarily in Qatar. This experience has sculpted me professionally and allowed me to contribute effectively to the field.
+        </p>
+    </div>
+    <div class="profile-column">
+        <h2>What I do</h2>
+        <p>
+            With over 13 years immersed in Doha's professional sphere, I'm a Document Management Expert. My forte lies in orchestrating seamless information flow across diverse projects. I design efficient systems that effortlessly organize and disseminate crucial documents. By harmonizing technology and efficiency, I drive success in this dynamic field, adapting my expertise to various project types.
+        </p>
+    </div>
+    <div class="profile-column">
+        <h2>My Strengths</h2>
+        <p>
+            My strength as a Document Management Expert is rooted in years of experience. I have mastered the art of transforming chaotic data landscapes into structured, efficient repositories. My abilities lie in strategizing information lifecycles, implementing robust systems, and fostering collaboration among teams, ultimately facilitating streamlined operations and growth.
+        </p>
+    </div>
+</div>
+
+<div class="section-box">
+    <h3 id="work-experience">Work Experience</h3>
+    <div class="skills-content">
+        <div class="work-experience-box"><p>2023-Present</p><p>Document Controller</p><p>Va Tech Wabag Ltd</p></div>
+        <div class="work-experience-box"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p></div>
+        <div class="work-experience-box"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p></div>
+        <div class="work-experience-box"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p></div>
+        <div class="work-experience-box"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p></div>
+        <div class="work-experience-box"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p></div>
+        <div class="work-experience-box"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p></div>
+        <div class="work-experience-box"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p></div>
+    </div>
+</div>
+
+<div class="section-box">
+    <h3 id="skills" class="section-heading">Skills</h3>
+    <div class="skills-content">
+        <div class="skills-box">
+            <strong>MS Excel</strong>
+            <ul>
+                <li>Task automation using Macros, Power Query, and VBA</li>
+                <li>Building formulas</li>
+                <li>Creating reports with Pivot Tables & Slicers</li>
+                <li>Data Formatting</li>
+            </ul>
+        </div>
+
+        <div class="skills-box">
+            <strong>Aconex</strong>
+            <ul>
+                <li>Process mapping and flowcharts</li>
+                <li>Workflow creation and management</li>
+                <li>Uploading and revising (superseding) multiple documents</li>
+                <li>Tracking document changes and creating reports</li>
+                <li>Mailing (distribution) groups</li>
+            </ul>
+        </div>
+
+        <div class="skills-box">
+            <strong>Computer Database</strong>
+            <ul>
+                <li>Maintain a computer database of all filed documentation that ensures fast retrieval of documents.</li>
+                <li>Develop and maintain a filing system and computer database for all documents.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-box">
+    <h3 id="project-details" class="section-heading">Project Details</h3>
+    <div class="skills-content">
+        <div class="skills-box">
+            <strong>Design & Build Contract for Rehabilitation of Doha South</strong>
+            <p>Contractor: Va Tech Wabag Limited</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Consultant: Parsons International Limited</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Roads & Infrastructure in Al Kheesa North & East (Rawat Al Hamama District) Package 02</strong>
+            <p>Contractor: China Railway Construction Corporation Ltd.</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Consultant: WSP International</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Infrastructure FS Gap Mall of Qatar Area and Celebration Road Foul Sewer- Package 05</strong>
+            <p>Contractor: QBS International W.L.L</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Consultant: Dar Al Handasah Consultant</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Road and Infrastructure in Rawdat Abal Heeran, MMUP Phase 2 Package 8 (DW015 – Package 1)</strong>
+            <p>Contractor: QBS International W.L.L</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Consultant: WS Atkins & Partners Overseas</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Upgrade of Al Rayyan, Al Bustan and khalifa Street Doha, Qatar</strong>
+            <p>Contractor: QBS International W.L.L</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Project Management: KBR (Kellogg Brown & Root)</p>
+            <p>Consultant: WS Atkins & Partners Overseas</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Developments of Main Road in Zone 46</strong>
+            <p>Contractor: QBS International W.L.L</p>
+            <p>Client: Public Works Authority (PWA)</p>
+            <p>Consultant: Ital Consult</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Qatar National Convention Centre (QNCC)</strong>
+            <p>Contractor: Baytur Construction & Contrating Company</p>
+            <p>Client: Qatar Petroleum</p>
+            <p>Project Management: ASTAD and KEO International</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-box">
+    <h3 id="hobbies-interests" class="section-heading">Hobbies and Interests</h3>
+    <div class="skills-content">
+        <div class="skills-box">
+            <strong>Reading</strong>
+            <p>Through the written word, I embark on endless journeys, exploring diverse realms of thought and emotion. Each book becomes a portal, broadening my perspective and igniting my imagination.</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Quest for Knowledge</strong>
+            <p>With an insatiable curiosity, I delve into uncharted territories of understanding. Embracing each lesson as a treasure, I forge a path towards continuous growth and enlightenment.</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Cooking</strong>
+            <p>If I suffer from anxiety or low moods, cooking could help increase my happiness.</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Drawing</strong>
+            <p>Drawing helps me discover, reflect on, and express myself. It helps me learn about myself. It helps me feel more happy and confident.</p>
+        </div>
+
+        <div class="skills-box">
+            <strong>Photography</strong>
+            <p>Photography encompasses far more than mere image capture. It cultivates conceptual acumen and technical mastery, while also imparting the art of collaboration. Feel free to explore my Instagram page to peruse the collection of photographs I've captured.</p>
+        </div>
+    </div>
+</div>
+
+<h3 id="qualification">Academic Qualifications & Achievements</h3>
+<p><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
+<p><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
+<p><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
+<p><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+
+<div class="download-buttons">
+    <a href="https://drive.google.com/file/d/14NkfaXyyJzrWJUekKZpp4VHUUZozo8c4/view?usp=sharing" target="_blank">
+        Download Resume
+    </a>
+    <a href="https://drive.google.com/file/d/1jd1k-JT2GyRI8IyuiRZp2duQUHOQEUIb/view?usp=sharing" target="_blank">
+        Download Portfolio
+    </a>
+</div>
+<h3 id="blogs">Blogs</h3>
+<div style="text-align: center; margin-top: 20px;">
+    <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; height: 0.5cm; width: 2cm; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 8px 16px; transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">Visit Blog</a>
+</div>
+<div class="contact-section" id="contact-section">
+    <p>Contact me:</p>
+    <p>Mail me @: <a href="mailto:kishornambisan@gmail.com">kishornambisan@gmail.com</a></p>
+    <p>Visit my LinkedIn Profile @ <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b">https://www.linkedin.com/in/kishor-sankaran-30649612b</a></p>
+    <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
+</div>
+<script>
+    // Add smooth scrolling behavior for push buttons
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll(".main-heading-buttons a");
+        buttons.forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                const targetId = button.getAttribute("href");
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = document.querySelector(".main-heading-buttons").offsetHeight; // Get the height of the sticky header
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+</script>
+</body>
+</html>
