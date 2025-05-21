@@ -275,6 +275,40 @@
                 display: block;
                 margin: 10px auto;
             }
+ #downloads-section {
+            background-color: #f8f8f8; /* A light background color */
+            padding: 60px 20px; /* Top/bottom padding, left/right padding */
+            margin: 50px auto; /* Space above/below, center the box horizontally */
+            max-width: 800px; /* Max width for the box, adjust as needed */
+            border-radius: 10px; /* Slightly rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* A subtle shadow */
+            text-align: center; /* Center the heading and buttons inside */
+        }
+
+        #downloads-section h2 {
+            color: #333; /* Darker color for the heading */
+            margin-bottom: 30px; /* Space below the heading */
+            font-size: 2.2em; /* Larger font size for the heading */
+        }
+
+        /* Optional: Improve spacing/look of the buttons within the box */
+        .download-buttons a {
+            display: inline-block; /* Allows side-by-side buttons */
+            margin: 15px; /* Space between buttons */
+            padding: 15px 30px; /* More padding for bigger buttons */
+            background-color: #007bff; /* Button background color */
+            color: white; /* Text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Slightly rounded button corners */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            font-size: 1.1em; /* Slightly larger text */
+            min-width: 180px; /* Ensures buttons are a consistent minimum width */
+        }
+
+        .download-buttons a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
         }
     </style>
 </head>
@@ -453,6 +487,8 @@
     <p><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
     <p><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
 
+    <section id="downloads-section">
+    <h2>Downloads</h2>
     <div class="download-buttons">
     <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
         Download Resume
@@ -460,7 +496,8 @@
     <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Portfolio.pdf" target="_blank">
         Download Portfolio
     </a>
-</div>
+    </div>
+    </section>
 
     <h3 id="blogs">Blogs</h3>
     <div style="text-align: center; margin-top: 20px;">
