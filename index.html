@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kishor Sankaran - Document Management Expert</title>
 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
         body {
             font-family: Calibri, Arial, sans-serif;
@@ -37,7 +39,7 @@
             text-align: center;
             padding: 20px 0;
             position: sticky;
-            top: 0; /* Changed from 0.0cm to 0 */
+            top: 0;
             background-color: #D1DAD7;
             z-index: 100;
             border-radius: 10px 10px 0 0;
@@ -115,7 +117,8 @@
         }
 
         .work-experience-box,
-        .skills-box {
+        .skills-box,
+        .project-item { /* Added .project-item here */
             background-color: rgba(169, 169, 169, 0.2);
             margin: 10px; /* Adjusted margin for better spacing */
             border-radius: 10px;
@@ -124,10 +127,12 @@
             flex-grow: 1; /* Allow boxes to grow */
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s; /* Added transition */
         }
 
         .work-experience-box p,
-        .skills-box p {
+        .skills-box p,
+        .project-item p { /* Added .project-item here */
             margin: 5px 0; /* Adjusted margin for better readability */
         }
 
@@ -142,7 +147,8 @@
             display: block; /* Make strong a block element to center its text */
         }
 
-        .skills-box ul {
+        .skills-box ul,
+        .project-item ul { /* Added .project-item here */
             list-style-type: disc;
             margin-left: 20px;
             padding: 0;
@@ -153,11 +159,14 @@
             text-align: center;
         }
 
+        /* NEW: Hover effects for content boxes */
         .work-experience-box:hover,
         .skills-box:hover,
-        .project-box:hover { /* Assuming .project-box might be used */
-            background-color: rgba(255, 255, 255, 0.2);
-            transition: background-color 0.3s;
+        .project-item:hover,
+        .recommendation-item:hover { /* Added .recommendation-item here */
+            transform: translateY(-5px); /* Moves the box up slightly */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for a 'lift' effect */
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter on hover */
         }
 
         /* Blog section specific styling */
@@ -187,21 +196,21 @@
 
         .download-buttons a {
             display: inline-block;
-            margin: 5px;
-            padding: 8px 16px;
-            background-color: #A8D0C2;
-            color: #5D605F;
+            margin: 15px;
+            padding: 15px 30px;
+            background-color: #007bff; /* Button background color */
+            color: white;
             text-decoration: none;
             border-radius: 5px;
-            border: 1px solid #496f8e;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s; /* Added transform/shadow transition */
+            font-size: 1.1em;
+            min-width: 180px;
         }
 
         .download-buttons a:hover {
-            background-color: #B7D6CB;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Slight lift for buttons */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         .download-buttons a img {
@@ -223,12 +232,81 @@
             padding: 10px;
         }
 
+        /* Recommendations Section Styling */
+        #recommendations {
+            padding: 60px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        #recommendations h2 {
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .recommendation-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 25px auto;
+            max-width: 700px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .recommender-info {
+            margin-bottom: 20px;
+        }
+        /* Adjusted to match your HTML structure for the recommender info */
+        .recommender-info p.Title {
+            margin: 5px 0 0;
+            color: #007bff;
+            font-size: 1.3em;
+            font-weight: bold; /* Make the title bold */
+        }
+
+        .recommender-info .recommender-title { /* Kept in case you reintroduce this class */
+            color: #777;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .recommendation-text {
+            font-style: italic;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .linkedin-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .linkedin-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+
         /* Media Queries for Responsiveness */
         @media (min-width: 1024px) {
             .work-experience-box {
                 width: calc(33.33% - 20px); /* 3 columns on large screens */
             }
             .skills-box {
+                width: calc(33.33% - 20px); /* 3 columns on large screens */
+            }
+            .project-item { /* Added .project-item here */
                 width: calc(33.33% - 20px); /* 3 columns on large screens */
             }
         }
@@ -241,6 +319,9 @@
                 width: calc(50% - 20px); /* 2 columns on medium screens */
             }
             .skills-box {
+                width: calc(50% - 20px); /* 2 columns on medium screens */
+            }
+            .project-item { /* Added .project-item here */
                 width: calc(50% - 20px); /* 2 columns on medium screens */
             }
         }
@@ -261,7 +342,8 @@
                 min-width: unset; /* Remove min-width to allow full width */
             }
             .work-experience-box,
-            .skills-box {
+            .skills-box,
+            .project-item { /* Added .project-item here */
                 width: 100%; /* Single column on small screens */
                 margin: 10px 0;
             }
@@ -275,101 +357,21 @@
                 display: block;
                 margin: 10px auto;
             }
- #downloads-section {
-            background-color: #f8f8f8; /* A light background color */
-            padding: 60px 20px; /* Top/bottom padding, left/right padding */
-            margin: 50px auto; /* Space above/below, center the box horizontally */
-            max-width: 800px; /* Max width for the box, adjust as needed */
-            border-radius: 10px; /* Slightly rounded corners */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* A subtle shadow */
-            text-align: center; /* Center the heading and buttons inside */
-        }
-
-        #downloads-section h2 {
-            color: #333; /* Darker color for the heading */
-            margin-bottom: 30px; /* Space below the heading */
-            font-size: 2.2em; /* Larger font size for the heading */
-        }
-
-        /* Optional: Improve spacing/look of the buttons within the box */
-        .download-buttons a {
-            display: inline-block; /* Allows side-by-side buttons */
-            margin: 15px; /* Space between buttons */
-            padding: 15px 30px; /* More padding for bigger buttons */
-            background-color: #007bff; /* Button background color */
-            color: white; /* Text color */
-            text-decoration: none; /* Remove underline */
-            border-radius: 5px; /* Slightly rounded button corners */
-            transition: background-color 0.3s ease; /* Smooth hover effect */
-            font-size: 1.1em; /* Slightly larger text */
-            min-width: 180px; /* Ensures buttons are a consistent minimum width */
-        }
-
-        .download-buttons a:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
-        }
-#recommendations {
-    padding: 60px 20px; /* Spacing around the section */
-    background-color: #f9f9f9; /* Light grey background */
-    text-align: center; /* Center the heading and items */
-}
-
-#recommendations h2 {
-    color: #333;
-    margin-bottom: 40px; /* Space below the heading */
-    font-size: 2.5em;
-}
-
-.recommendation-item {
-    background-color: #fff; /* White background for each recommendation box */
-    border: 1px solid #eee; /* Light border */
-    border-radius: 10px; /* Rounded corners */
-    padding: 30px;
-    margin: 25px auto; /* Space between items and center them */
-    max-width: 700px; /* Max width for each item */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
-    display: flex; /* Use flexbox for layout within the item */
-    flex-direction: column; /* Stack contents vertically */
-    align-items: center; /* Center items horizontally within the box */
-    text-align: center; /* Center text within the box */
-}
-
-.recommender-info {
-    margin-bottom: 20px; /* Space below recommender details */
-}
-.recommender-info h4 {
-    margin: 5px 0 0; /* Adjust spacing around name */
-    color: #007bff; /* Name color */
-    font-size: 1.3em;
-}
-
-.recommender-info .recommender-title {
-    color: #777; /* Title/company color */
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-
-.recommendation-text {
-    font-style: italic; /* Italicize the quote */
-    color: #444;
-    line-height: 1.6;
-    margin-bottom: 20px; /* Space below the text */
-}
-
-.linkedin-link {
-    color: #007bff; /* LinkedIn link color */
-    text-decoration: none; /* Remove underline */
-    font-weight: bold;
-    display: inline-block; /* Allows padding/margin */
-    margin-top: 10px;
-    transition: color 0.3s ease; /* Smooth hover effect */
-}
-
-.linkedin-link:hover {
-    color: #0056b3; /* Darker blue on hover */
-    text-decoration: underline; /* Underline on hover */
-}
+            #downloads-section {
+                background-color: #f8f8f8;
+                padding: 30px 15px; /* Adjust padding for small screens */
+                margin: 30px auto;
+                border-radius: 8px;
+            }
+            #downloads-section h2 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            .download-buttons a {
+                padding: 12px 20px;
+                font-size: 1em;
+                min-width: unset; /* Allow buttons to size based on content */
+            }
         }
     </style>
 </head>
@@ -382,12 +384,13 @@
         <a href="#hobbies-interests">Hobbies & Interests</a>
         <a href="#qualification">Qualification</a>
         <a href="#blogs">Blogs</a>
-        <a href="#contact">Contact</a> 
-        <a href="#downloads-section">Go to Downloads</a> </div>
+        <a href="#contact">Contact</a>
+        <a href="#downloads-section">Go to Downloads</a>
+        <a href="#recommendations">Recommendations</a> </div>
 
     <h1>Kishor Sankaran - Document Management Expert</h1>
 
-       <div class="profile-summary">
+    <div class="profile-summary" data-aos="fade-up">
         <div class="profile-column">
             <h2>About me</h2>
             <p>
@@ -408,24 +411,24 @@
         </div>
     </div>
 
-    <div class="section-box">
+    <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="work-experience">Work Experience</h3>
         <div class="section-content skills-content">
-            <div class="work-experience-box"><p>2023-Present</p><p>Handover Document Controller</p><p>VA Tech Wabag Ltd</p></div>
-            <div class="work-experience-box"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p></div>
-            <div class="work-experience-box"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p></div>
-            <div class="work-experience-box"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p></div>
-            <div class="work-experience-box"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p></div>
-            <div class="work-experience-box"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p></div>
-            <div class="work-experience-box"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p></div>
-            <div class="work-experience-box"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p></div>
+            <div class="work-experience-box" data-aos="fade-right"><p>2023-Present</p><p>Handover Document Controller</p><p>VA Tech Wabag Ltd</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="100"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="200"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="300"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="400"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="500"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="600"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p></div>
+            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="700"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p></div>
         </div>
     </div>
 
-    <div class="section-box">
+    <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="skills" class="section-heading">Skills</h3>
         <div class="section-content skills-content">
-            <div class="skills-box">
+            <div class="skills-box" data-aos="zoom-in" data-aos-delay="50">
                 <p><strong>MS Excel</strong></p>
                 <ul>
                     <li>Task automation using Macros, Power Query, and VBA</li>
@@ -435,7 +438,7 @@
                 </ul>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="zoom-in" data-aos-delay="150">
                 <p><strong>Aconex</strong></p>
                 <ul>
                     <li>Process mapping and flowcharts</li>
@@ -446,7 +449,7 @@
                 </ul>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="zoom-in" data-aos-delay="250">
                 <p><strong>Computer Database</strong></p>
                 <ul>
                     <li>Maintain a computer database of all filed documentation that ensures fast retrieval of documents.</li>
@@ -456,38 +459,38 @@
         </div>
     </div>
 
-    <div class="section-box">
+    <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="project-details" class="section-heading">Project Details</h3>
         <div class="section-content skills-content">
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="50">
                 <p><strong>Design & Build Contract for Rehabilitation of Doha South</strong></p>
                 <p>Contractor: VA Tech Wabag Limited</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Parsons International Limited</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="150">
                 <p><strong>Roads & Infrastructure in Al Kheesa North & East (Rawat Al Hamama District) Package 02</strong></p>
                 <p>Contractor: China Railway Construction Corporation Ltd.</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WSP International</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="250">
                 <p><strong>Infrastructure FS Gap Mall of Qatar Area and Celebration Road Foul Sewer- Package 05</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Dar Al Handasah Consultant</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="350">
                 <p><strong>Road and Infrastructure in Rawdat Abal Heeran, MMUP Phase 2 Package 8 (DW015 – Package 1)</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="450">
                 <p><strong>Upgrade of Al Rayyan, Al Bustan and khalifa Street Doha, Qatar</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
@@ -495,14 +498,14 @@
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="550">
                 <p><strong>Developments of Main Road in Zone 46</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Ital Consult</p>
             </div>
 
-            <div class="skills-box">
+            <div class="project-item" data-aos="fade-left" data-aos-delay="650">
                 <p><strong>Qatar National Convention Centre (QNCC)</strong></p>
                 <p>Contractor: Baytur Construction & Contrating Company</p>
                 <p>Client: Qatar Petroleum</p>
@@ -512,87 +515,90 @@
     </div>
 
 
-    <div class="section-box">
+    <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="hobbies-interests" class="section-heading">Hobbies and Interests</h3>
         <div class="section-content skills-content">
-            <div class="skills-box">
+            <div class="skills-box" data-aos="flip-up" data-aos-delay="50">
                 <p><strong>Reading</strong></p>
                 <p>Through the written word, I embark on endless journeys, exploring diverse realms of thought and emotion. Each book becomes a portal, broadening my perspective and igniting my imagination.</p>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="flip-up" data-aos-delay="150">
                 <p><strong>Quest for Knowledge</strong></p>
                 <p>With an insatiable curiosity, I delve into uncharted territories of understanding. Embracing each lesson as a treasure, I forge a path towards continuous growth and enlightenment.</p>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="flip-up" data-aos-delay="250">
                 <p><strong>Cooking</strong></p>
                 <p>If I suffer from anxiety or low moods, cooking could help increase my happiness.</p>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="flip-up" data-aos-delay="350">
                 <p><strong>Drawing</strong></p>
                 <p>Drawing helps me discover, reflect on, and express myself. It helps me learn about myself. It helps me feel more happy and confident.</p>
             </div>
 
-            <div class="skills-box">
+            <div class="skills-box" data-aos="flip-up" data-aos-delay="450">
                 <p><strong>Photography</strong></p>
                 <p>Photography encompasses far more than mere image capture. It cultivates conceptual acumen and technical mastery, while also imparting the art of collaboration. Feel free to explore my Instagram page to peruse the collection of photographs I've captured.</p>
             </div>
         </div>
     </div>
 
-    <h3 id="qualification">Academic Qualifications & Achievements</h3>
-    <p><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
-    <p><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
-    <p><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
-    <p><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+    <h3 id="qualification" data-aos="fade-up" data-aos-delay="100">Academic Qualifications & Achievements</h3>
+    <p data-aos="fade-right"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
+    <p data-aos="fade-right" data-aos-delay="100"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
+    <p data-aos="fade-right" data-aos-delay="200"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
+    <p data-aos="fade-right" data-aos-delay="300"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
 
-    <section id="downloads-section">
-    <h2>Downloads</h2>
-    <div class="download-buttons">
-    <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
-        Download Resume
-    </a>
-    <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Portfolio.pdf" target="_blank">
-        Download Portfolio
-    </a>
-    </div>
-<section id="recommendations">
-    <h2>What People Say About Me</h2>
-
-    <div class="recommendation-item">
-        <div class="recommender-info">
-        <p class="Title">John Mitchell, Prpjects Director, Ciall Consulting</p>
+    <section id="downloads-section" data-aos="fade-left">
+        <h2>Downloads</h2>
+        <div class="download-buttons">
+            <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
+                Download Resume
+            </a>
+            <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Portfolio.pdf" target="_blank">
+                Download Portfolio
+            </a>
         </div>
-        <blockquote class="recommendation-text">
-            "I was employed as a Projects Director by Messrs QBS in Qatar for several projects
-including commencing in 2014 through to the end of 2016.
-Mr Sankaran was employed to manage the office administration and document control
-for the company’s flagship projects.
-I got to know Kishor very well during this time and found him to be extremely capable,
-diligent and efficient. He showed a great understanding of the company’s site
-management systems and the interaction with the wider company systems and those of
-the Supervision Consultants and Project Management Consultants employed by the
-Client. His department was subject to numerous audits, internally and externally, and
-were always confirmed to be of the highest standards.
-He is a very personable and gets on very well with his colleagues. He has all the technical
-and administrative skills required for this type of work.
-I would have no hesitation in recommending Kishor for any similar role and consider that
-he talents were underutilized and is capable of taking on much more responsibility.
-I commend him without reservation."
-        </blockquote>
-        <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">View on LinkedIn</a>
-    </div>
-
     </section>
 
-    <h3 id="blogs">Blogs</h3>
-    <div style="text-align: center; margin-top: 20px;">
+    <section id="recommendations" data-aos="fade-up" data-aos-delay="100">
+        <h2>What People Say About Me</h2>
+
+        <div class="recommendation-item" data-aos="fade-right">
+            <div class="recommender-info">
+            <p class="Title">John Mitchell, Projects Director, Ciall Consulting</p>
+            </div>
+            <blockquote class="recommendation-text">
+                "I was employed as a Projects Director by Messrs QBS in Qatar for several projects
+                including commencing in 2014 through to the end of 2016.
+                Mr Sankaran was employed to manage the office administration and document control
+                for the company’s flagship projects.
+                I got to know Kishor very well during this time and found him to be extremely capable,
+                diligent and efficient. He showed a great understanding of the company’s site
+                management systems and the interaction with the wider company systems and those of
+                the Supervision Consultants and Project Management Consultants employed by the
+                Client. His department was subject to numerous audits, internally and externally, and
+                were always confirmed to be of the highest standards.
+                He is a very personable and gets on very well with his colleagues. He has all the technical
+                and administrative skills required for this type of work.
+                I would have no hesitation in recommending Kishor for any similar role and consider that
+                he talents were underutilized and is capable of taking on much more responsibility.
+                I commend him without reservation."
+            </blockquote>
+            <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">View on LinkedIn</a>
+        </div>
+
+        </section>
+
+    <h3 id="blogs" data-aos="fade-up" data-aos-delay="100">Blogs</h3>
+    <div style="text-align: center; margin-top: 20px;" data-aos="zoom-in">
         <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">Visit Blog</a>
     </div>
 
-    <div class="contact-section" id="contact"> <p>Contact me:</p>
+    <div class="contact-section" id="contact" data-aos="fade-up">
+        <p>Contact me:</p>
         <p>Mail me @: <a href="mailto:kishornambisan@gmail.com">kishornambisan@gmail.com</a></p>
         <p>Visit my LinkedIn Profile @ <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b">https://www.linkedin.com/in/kishor-sankaran-30649612b</a></p>
         <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
@@ -608,7 +614,6 @@ I commend him without reservation."
                     const targetId = button.getAttribute("href");
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Calculate offset for smooth scrolling, accounting for sticky header
                         const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
                         const targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
                         const yOffset = targetOffset - headerHeight - 10; // Adjust 10px for a little padding
@@ -628,6 +633,16 @@ I commend him without reservation."
                 behavior: "smooth"
             });
         }
+    </script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Duration of animation (in ms)
+            once: true,     // Whether animation should happen only once - default is false
+            mirror: false,  // Whether elements should animate out while scrolling past them (set to false for a clean entrance)
+            offset: 120,    // Offset (in px) from the top of the screen where the animation should start
+        });
     </script>
 </body>
 </html>
