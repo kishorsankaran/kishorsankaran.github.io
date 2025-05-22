@@ -117,8 +117,7 @@
         }
 
         .work-experience-box,
-        .skills-box,
-        .project-item { /* Added .project-item here */
+        .skills-box {
             background-color: rgba(169, 169, 169, 0.2);
             margin: 10px; /* Adjusted margin for better spacing */
             border-radius: 10px;
@@ -127,12 +126,10 @@
             flex-grow: 1; /* Allow boxes to grow */
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s; /* Added transition */
         }
 
         .work-experience-box p,
-        .skills-box p,
-        .project-item p { /* Added .project-item here */
+        .skills-box p {
             margin: 5px 0; /* Adjusted margin for better readability */
         }
 
@@ -147,8 +144,7 @@
             display: block; /* Make strong a block element to center its text */
         }
 
-        .skills-box ul,
-        .project-item ul { /* Added .project-item here */
+        .skills-box ul {
             list-style-type: disc;
             margin-left: 20px;
             padding: 0;
@@ -159,14 +155,20 @@
             text-align: center;
         }
 
-        /* NEW: Hover effects for content boxes */
+        /* NEW: Hover Effects for content boxes */
+        .work-experience-box,
+        .skills-box,
+        .project-item, /* For project boxes, if they had a distinct class */
+        .recommendation-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+
         .work-experience-box:hover,
         .skills-box:hover,
-        .project-item:hover,
-        .recommendation-item:hover { /* Added .recommendation-item here */
+        .project-item:hover, /* If you add this class to project items */
+        .recommendation-item:hover {
             transform: translateY(-5px); /* Moves the box up slightly */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for a 'lift' effect */
-            background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter on hover */
         }
 
         /* Blog section specific styling */
@@ -196,21 +198,21 @@
 
         .download-buttons a {
             display: inline-block;
-            margin: 15px;
-            padding: 15px 30px;
-            background-color: #007bff; /* Button background color */
-            color: white;
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #A8D0C2;
+            color: #5D605F;
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s; /* Added transform/shadow transition */
-            font-size: 1.1em;
-            min-width: 180px;
+            border: 1px solid #496f8e;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
         }
 
         .download-buttons a:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px); /* Slight lift for buttons */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            background-color: #B7D6CB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .download-buttons a img {
@@ -232,81 +234,143 @@
             padding: 10px;
         }
 
-        /* Recommendations Section Styling */
+        /* Styling for the Downloads Section Box */
+        #downloads-section {
+            background-color: #f8f8f8; /* A light background color */
+            padding: 60px 20px; /* Top/bottom padding, left/right padding */
+            margin: 50px auto; /* Space above/below, center the box horizontally */
+            max-width: 800px; /* Max width for the box, adjust as needed */
+            border-radius: 10px; /* Slightly rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* A subtle shadow */
+            text-align: center; /* Center the heading and buttons inside */
+        }
+
+        #downloads-section h2 {
+            color: #333; /* Darker color for the heading */
+            margin-bottom: 30px; /* Space below the heading */
+            font-size: 2.2em; /* Larger font size for the heading */
+        }
+
+        /* Improve spacing/look of the buttons within the downloads box */
+        #downloads-section .download-buttons a {
+            display: inline-block; /* Allows side-by-side buttons */
+            margin: 15px; /* Space between buttons */
+            padding: 15px 30px; /* More padding for bigger buttons */
+            background-color: #007bff; /* Button background color */
+            color: white; /* Text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Slightly rounded button corners */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            font-size: 1.1em; /* Slightly larger text */
+            min-width: 180px; /* Ensures buttons are a consistent minimum width */
+        }
+
+        #downloads-section .download-buttons a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+
+        /* --- Styling for the Recommendations Section --- */
         #recommendations {
-            padding: 60px 20px;
-            background-color: #f9f9f9;
-            text-align: center;
+            padding: 60px 20px; /* Spacing around the section */
+            background-color: #f9f9f9; /* Light grey background */
+            text-align: center; /* Center the heading and items */
         }
 
         #recommendations h2 {
             color: #333;
-            margin-bottom: 40px;
+            margin-bottom: 40px; /* Space below the heading */
             font-size: 2.5em;
         }
 
         .recommendation-item {
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 10px;
+            background-color: #fff; /* White background for each recommendation box */
+            border: 1px solid #eee; /* Light border */
+            border-radius: 10px; /* Rounded corners */
             padding: 30px;
-            margin: 25px auto;
-            max-width: 700px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            margin: 25px auto; /* Space between items and center them */
+            max-width: 700px; /* Max width for each item */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+            display: flex; /* Use flexbox for layout within the item */
+            flex-direction: column; /* Stack contents vertically */
+            align-items: center; /* Center items horizontally within the box */
+            text-align: center; /* Center text within the box */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added for hover effect */
         }
 
         .recommender-info {
-            margin-bottom: 20px;
-        }
-        /* Adjusted to match your HTML structure for the recommender info */
-        .recommender-info p.Title {
-            margin: 5px 0 0;
-            color: #007bff;
-            font-size: 1.3em;
-            font-weight: bold; /* Make the title bold */
+            margin-bottom: 20px; /* Space below recommender details */
         }
 
-        .recommender-info .recommender-title { /* Kept in case you reintroduce this class */
-            color: #777;
+        .recommender-photo { /* Added this style in case you decide to add photos later */
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #007bff;
+        }
+
+        .recommender-info h4 {
+            margin: 5px 0 0; /* Adjust spacing around name */
+            color: #007bff; /* Name color */
+            font-size: 1.3em;
+        }
+
+        .recommender-info .recommender-title {
+            color: #777; /* Title/company color */
             font-size: 0.9em;
             margin-top: 5px;
         }
 
         .recommendation-text {
-            font-style: italic;
+            font-style: italic; /* Italicize the quote */
             color: #444;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Space below the text */
         }
 
         .linkedin-link {
-            color: #007bff;
-            text-decoration: none;
+            color: #007bff; /* LinkedIn link color */
+            text-decoration: none; /* Remove underline */
             font-weight: bold;
-            display: inline-block;
+            display: inline-block; /* Allows padding/margin */
             margin-top: 10px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease; /* Smooth hover effect */
         }
 
         .linkedin-link:hover {
-            color: #0056b3;
-            text-decoration: underline;
+            color: #0056b3; /* Darker blue on hover */
+            text-decoration: underline; /* Underline on hover */
         }
 
+        /* NEW: Style for the "New" tag on Blogs button */
+        .new-blog-tag {
+            background-color: #e04444; /* Red background */
+            color: white; /* White text */
+            padding: 2px 7px;
+            border-radius: 12px; /* More rounded */
+            font-size: 0.75em; /* Smaller text */
+            margin-left: 8px; /* Space from the button text */
+            vertical-align: super; /* Slightly raised */
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            animation: pulse 1.5s infinite; /* Add a pulse animation */
+        }
 
-        /* Media Queries for Responsiveness */
+        /* Keyframes for the pulse animation */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Media Queries for Responsiveness (kept as is) */
         @media (min-width: 1024px) {
             .work-experience-box {
                 width: calc(33.33% - 20px); /* 3 columns on large screens */
             }
             .skills-box {
-                width: calc(33.33% - 20px); /* 3 columns on large screens */
-            }
-            .project-item { /* Added .project-item here */
                 width: calc(33.33% - 20px); /* 3 columns on large screens */
             }
         }
@@ -319,9 +383,6 @@
                 width: calc(50% - 20px); /* 2 columns on medium screens */
             }
             .skills-box {
-                width: calc(50% - 20px); /* 2 columns on medium screens */
-            }
-            .project-item { /* Added .project-item here */
                 width: calc(50% - 20px); /* 2 columns on medium screens */
             }
         }
@@ -342,8 +403,7 @@
                 min-width: unset; /* Remove min-width to allow full width */
             }
             .work-experience-box,
-            .skills-box,
-            .project-item { /* Added .project-item here */
+            .skills-box {
                 width: 100%; /* Single column on small screens */
                 margin: 10px 0;
             }
@@ -356,21 +416,6 @@
             .download-buttons a {
                 display: block;
                 margin: 10px auto;
-            }
-            #downloads-section {
-                background-color: #f8f8f8;
-                padding: 30px 15px; /* Adjust padding for small screens */
-                margin: 30px auto;
-                border-radius: 8px;
-            }
-            #downloads-section h2 {
-                font-size: 1.8em;
-                margin-bottom: 20px;
-            }
-            .download-buttons a {
-                padding: 12px 20px;
-                font-size: 1em;
-                min-width: unset; /* Allow buttons to size based on content */
             }
         }
     </style>
@@ -386,9 +431,10 @@
         <a href="#blogs">Blogs</a>
         <a href="#contact">Contact</a>
         <a href="#downloads-section">Go to Downloads</a>
-        <a href="#recommendations">Recommendations</a> </div>
+        <a href="#recommendations">Recommendations</a>
+    </div>
 
-    <h1>Kishor Sankaran - Document Management Expert</h1>
+    <h1 data-aos="zoom-in">Kishor Sankaran - Document Management Expert</h1>
 
     <div class="profile-summary" data-aos="fade-up">
         <div class="profile-column">
@@ -414,21 +460,21 @@
     <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="work-experience">Work Experience</h3>
         <div class="section-content skills-content">
-            <div class="work-experience-box" data-aos="fade-right"><p>2023-Present</p><p>Handover Document Controller</p><p>VA Tech Wabag Ltd</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="100"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="200"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="300"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="400"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="500"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="600"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p></div>
-            <div class="work-experience-box" data-aos="fade-right" data-aos-delay="700"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="200"><p>2023-Present</p><p>Handover Document Controller</p><p>VA Tech Wabag Ltd</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="300"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="400"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="500"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="600"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="700"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="800"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p></div>
+            <div class="work-experience-box" data-aos="fade-up" data-aos-delay="900"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p></div>
         </div>
     </div>
 
     <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="skills" class="section-heading">Skills</h3>
         <div class="section-content skills-content">
-            <div class="skills-box" data-aos="zoom-in" data-aos-delay="50">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
                 <p><strong>MS Excel</strong></p>
                 <ul>
                     <li>Task automation using Macros, Power Query, and VBA</li>
@@ -438,7 +484,7 @@
                 </ul>
             </div>
 
-            <div class="skills-box" data-aos="zoom-in" data-aos-delay="150">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
                 <p><strong>Aconex</strong></p>
                 <ul>
                     <li>Process mapping and flowcharts</li>
@@ -449,7 +495,7 @@
                 </ul>
             </div>
 
-            <div class="skills-box" data-aos="zoom-in" data-aos-delay="250">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
                 <p><strong>Computer Database</strong></p>
                 <ul>
                     <li>Maintain a computer database of all filed documentation that ensures fast retrieval of documents.</li>
@@ -462,35 +508,35 @@
     <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="project-details" class="section-heading">Project Details</h3>
         <div class="section-content skills-content">
-            <div class="project-item" data-aos="fade-left" data-aos-delay="50">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
                 <p><strong>Design & Build Contract for Rehabilitation of Doha South</strong></p>
                 <p>Contractor: VA Tech Wabag Limited</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Parsons International Limited</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="150">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
                 <p><strong>Roads & Infrastructure in Al Kheesa North & East (Rawat Al Hamama District) Package 02</strong></p>
                 <p>Contractor: China Railway Construction Corporation Ltd.</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WSP International</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="250">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
                 <p><strong>Infrastructure FS Gap Mall of Qatar Area and Celebration Road Foul Sewer- Package 05</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Dar Al Handasah Consultant</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="350">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
                 <p><strong>Road and Infrastructure in Rawdat Abal Heeran, MMUP Phase 2 Package 8 (DW015 – Package 1)</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="450">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="600">
                 <p><strong>Upgrade of Al Rayyan, Al Bustan and khalifa Street Doha, Qatar</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
@@ -498,14 +544,14 @@
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="550">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="700">
                 <p><strong>Developments of Main Road in Zone 46</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Ital Consult</p>
             </div>
 
-            <div class="project-item" data-aos="fade-left" data-aos-delay="650">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="800">
                 <p><strong>Qatar National Convention Centre (QNCC)</strong></p>
                 <p>Contractor: Baytur Construction & Contrating Company</p>
                 <p>Client: Qatar Petroleum</p>
@@ -514,44 +560,43 @@
         </div>
     </div>
 
-
     <div class="section-box" data-aos="fade-up" data-aos-delay="100">
         <h3 id="hobbies-interests" class="section-heading">Hobbies and Interests</h3>
         <div class="section-content skills-content">
-            <div class="skills-box" data-aos="flip-up" data-aos-delay="50">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
                 <p><strong>Reading</strong></p>
                 <p>Through the written word, I embark on endless journeys, exploring diverse realms of thought and emotion. Each book becomes a portal, broadening my perspective and igniting my imagination.</p>
             </div>
 
-            <div class="skills-box" data-aos="flip-up" data-aos-delay="150">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
                 <p><strong>Quest for Knowledge</strong></p>
                 <p>With an insatiable curiosity, I delve into uncharted territories of understanding. Embracing each lesson as a treasure, I forge a path towards continuous growth and enlightenment.</p>
             </div>
 
-            <div class="skills-box" data-aos="flip-up" data-aos-delay="250">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
                 <p><strong>Cooking</strong></p>
                 <p>If I suffer from anxiety or low moods, cooking could help increase my happiness.</p>
             </div>
 
-            <div class="skills-box" data-aos="flip-up" data-aos-delay="350">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
                 <p><strong>Drawing</strong></p>
                 <p>Drawing helps me discover, reflect on, and express myself. It helps me learn about myself. It helps me feel more happy and confident.</p>
             </div>
 
-            <div class="skills-box" data-aos="flip-up" data-aos-delay="450">
+            <div class="skills-box" data-aos="fade-up" data-aos-delay="600">
                 <p><strong>Photography</strong></p>
                 <p>Photography encompasses far more than mere image capture. It cultivates conceptual acumen and technical mastery, while also imparting the art of collaboration. Feel free to explore my Instagram page to peruse the collection of photographs I've captured.</p>
             </div>
         </div>
     </div>
 
-    <h3 id="qualification" data-aos="fade-up" data-aos-delay="100">Academic Qualifications & Achievements</h3>
-    <p data-aos="fade-right"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
-    <p data-aos="fade-right" data-aos-delay="100"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
-    <p data-aos="fade-right" data-aos-delay="200"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
-    <p data-aos="fade-right" data-aos-delay="300"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+    <h3 id="qualification" data-aos="fade-up">Academic Qualifications & Achievements</h3>
+    <p data-aos="fade-up" data-aos-delay="100"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
+    <p data-aos="fade-up" data-aos-delay="200"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
+    <p data-aos="fade-up" data-aos-delay="300"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
+    <p data-aos="fade-up" data-aos-delay="400"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
 
-    <section id="downloads-section" data-aos="fade-left">
+    <section id="downloads-section" data-aos="zoom-in">
         <h2>Downloads</h2>
         <div class="download-buttons">
             <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
@@ -563,38 +608,26 @@
         </div>
     </section>
 
-    <section id="recommendations" data-aos="fade-up" data-aos-delay="100">
-        <h2>What People Say About Me</h2>
+    <section id="recommendations" data-aos="fade-up">
+        <h2>Professional Praise</h2>
 
-        <div class="recommendation-item" data-aos="fade-right">
+        <div class="recommendation-item" data-aos="fade-up" data-aos-delay="100">
             <div class="recommender-info">
-            <p class="Title">John Mitchell, Projects Director, Ciall Consulting</p>
+                <h4>John Mitchell</h4>
+                <p class="recommender-title">Projects Director, Ciall Consulting</p>
             </div>
             <blockquote class="recommendation-text">
-                "I was employed as a Projects Director by Messrs QBS in Qatar for several projects
-                including commencing in 2014 through to the end of 2016.
-                Mr Sankaran was employed to manage the office administration and document control
-                for the company’s flagship projects.
-                I got to know Kishor very well during this time and found him to be extremely capable,
-                diligent and efficient. He showed a great understanding of the company’s site
-                management systems and the interaction with the wider company systems and those of
-                the Supervision Consultants and Project Management Consultants employed by the
-                Client. His department was subject to numerous audits, internally and externally, and
-                were always confirmed to be of the highest standards.
-                He is a very personable and gets on very well with his colleagues. He has all the technical
-                and administrative skills required for this type of work.
-                I would have no hesitation in recommending Kishor for any similar role and consider that
-                he talents were underutilized and is capable of taking on much more responsibility.
-                I commend him without reservation."
+                "I was employed as a Projects Director by Messrs QBS in Qatar for several projects including commencing in 2014 through to the end of 2016. Mr Sankaran was employed to manage the office administration and document control for the company’s flagship projects. I got to know Kishor very well during this time and found him to be extremely capable, diligent and efficient. He showed a great understanding of the company’s site management systems and the interaction with the wider company systems and those of the Supervision Consultants and Project Management Consultants employed by the Client. His department was subject to numerous audits, internally and externally, and were always confirmed to be of the highest standards. He is a very personable and gets on very well with his colleagues. He has all the technical and administrative skills required for this type of work. I would have no hesitation in recommending Kishor for any similar role and consider that he talents were underutilized and is capable of taking on much more responsibility. I commend him without reservation."
             </blockquote>
             <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">View on LinkedIn</a>
         </div>
-
         </section>
 
-    <h3 id="blogs" data-aos="fade-up" data-aos-delay="100">Blogs</h3>
-    <div style="text-align: center; margin-top: 20px;" data-aos="zoom-in">
-        <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">Visit Blog</a>
+    <h3 id="blogs" data-aos="fade-up">Blogs</h3>
+    <div style="text-align: center; margin-top: 20px;" data-aos="fade-up" data-aos-delay="100">
+        <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">
+            Visit Blog <span class="new-blog-tag">New</span>
+        </a>
     </div>
 
     <div class="contact-section" id="contact" data-aos="fade-up">
@@ -604,8 +637,17 @@
         <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
     </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Add smooth scrolling behavior for push buttons
+        // Initialize AOS
+        AOS.init({
+            duration: 1000, // Duration of animation (in ms)
+            once: true,     // Whether animation should happen only once - default
+            mirror: false,  // Whether elements should animate out while scrolling past them
+            offset: 100,    // Offset (in px) from the top of the screen where the animation should start
+        });
+
+        // Add smooth scrolling behavior for push buttons (your existing code)
         document.addEventListener("DOMContentLoaded", function() {
             const buttons = document.querySelectorAll(".main-heading-buttons a");
             buttons.forEach(button => {
@@ -614,6 +656,7 @@
                     const targetId = button.getAttribute("href");
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
+                        // Calculate offset for smooth scrolling, accounting for sticky header
                         const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
                         const targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
                         const yOffset = targetOffset - headerHeight - 10; // Adjust 10px for a little padding
@@ -633,16 +676,6 @@
                 behavior: "smooth"
             });
         }
-    </script>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000, // Duration of animation (in ms)
-            once: true,     // Whether animation should happen only once - default is false
-            mirror: false,  // Whether elements should animate out while scrolling past them (set to false for a clean entrance)
-            offset: 120,    // Offset (in px) from the top of the screen where the animation should start
-        });
     </script>
 </body>
 </html>
