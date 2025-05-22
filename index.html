@@ -309,6 +309,67 @@
             background-color: #0056b3; /* Darker blue on hover */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
         }
+#recommendations {
+    padding: 60px 20px; /* Spacing around the section */
+    background-color: #f9f9f9; /* Light grey background */
+    text-align: center; /* Center the heading and items */
+}
+
+#recommendations h2 {
+    color: #333;
+    margin-bottom: 40px; /* Space below the heading */
+    font-size: 2.5em;
+}
+
+.recommendation-item {
+    background-color: #fff; /* White background for each recommendation box */
+    border: 1px solid #eee; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 30px;
+    margin: 25px auto; /* Space between items and center them */
+    max-width: 700px; /* Max width for each item */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+    display: flex; /* Use flexbox for layout within the item */
+    flex-direction: column; /* Stack contents vertically */
+    align-items: center; /* Center items horizontally within the box */
+    text-align: center; /* Center text within the box */
+}
+
+.recommender-info {
+    margin-bottom: 20px; /* Space below recommender details */
+}
+.recommender-info h4 {
+    margin: 5px 0 0; /* Adjust spacing around name */
+    color: #007bff; /* Name color */
+    font-size: 1.3em;
+}
+
+.recommender-info .recommender-title {
+    color: #777; /* Title/company color */
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.recommendation-text {
+    font-style: italic; /* Italicize the quote */
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 20px; /* Space below the text */
+}
+
+.linkedin-link {
+    color: #007bff; /* LinkedIn link color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+    display: inline-block; /* Allows padding/margin */
+    margin-top: 10px;
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.linkedin-link:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline; /* Underline on hover */
+}
         }
     </style>
 </head>
@@ -497,6 +558,33 @@
         Download Portfolio
     </a>
     </div>
+<section id="recommendations">
+    <h2>What People Say About Me</h2>
+
+    <div class="recommendation-item">
+        <div class="recommender-info">
+        <p class="Title">John Mitchell, Prpjects Director, Ciall Consulting</p>
+        </div>
+        <blockquote class="recommendation-text">
+            "I was employed as a Projects Director by Messrs QBS in Qatar for several projects
+including commencing in 2014 through to the end of 2016.
+Mr Sankaran was employed to manage the office administration and document control
+for the company’s flagship projects.
+I got to know Kishor very well during this time and found him to be extremely capable,
+diligent and efficient. He showed a great understanding of the company’s site
+management systems and the interaction with the wider company systems and those of
+the Supervision Consultants and Project Management Consultants employed by the
+Client. His department was subject to numerous audits, internally and externally, and
+were always confirmed to be of the highest standards.
+He is a very personable and gets on very well with his colleagues. He has all the technical
+and administrative skills required for this type of work.
+I would have no hesitation in recommending Kishor for any similar role and consider that
+he talents were underutilized and is capable of taking on much more responsibility.
+I commend him without reservation."
+        </blockquote>
+        <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">View on LinkedIn</a>
+    </div>
+
     </section>
 
     <h3 id="blogs">Blogs</h3>
