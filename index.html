@@ -173,7 +173,7 @@
         }
 
         /* Blog section specific styling */
-        #blogs {
+        #blogs-h3 { /* Changed ID to point to the h3 */
             margin-top: 40px;
             font-size: 24px;
             color: #3C3E40;
@@ -186,7 +186,7 @@
             cursor: pointer;
         }
 
-        #blogs:hover {
+        #blogs-h3:hover { /* Changed ID to point to the h3 */
             background-color: #B7D6CB;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
@@ -236,7 +236,7 @@
         }
 
         /* Styling for the Downloads Section Box */
-        #downloads-section {
+        #downloads-section-h2 { /* Changed ID to point to the h2 */
             background-color: #f8f8f8; /* A light background color */
             padding: 60px 20px; /* Top/bottom padding, left/right padding */
             margin: 50px auto; /* Space above/below, center the box horizontally */
@@ -246,14 +246,14 @@
             text-align: center; /* Center the heading and buttons inside */
         }
 
-        #downloads-section h2 {
+        #downloads-section-h2 h2 { /* Changed ID to point to the h2 */
             color: #333; /* Darker color for the heading */
             margin-bottom: 30px; /* Space below the heading */
             font-size: 2.2em; /* Larger font size for the heading */
         }
 
         /* Improve spacing/look of the buttons within the downloads box */
-        #downloads-section .download-buttons a {
+        #downloads-section-h2 .download-buttons a { /* Changed ID to point to the h2 */
             display: inline-block; /* Allows side-by-side buttons */
             margin: 15px; /* Space between buttons */
             padding: 15px 30px; /* More padding for bigger buttons */
@@ -266,19 +266,19 @@
             min-width: 180px; /* Ensures buttons are a consistent minimum width */
         }
 
-        #downloads-section .download-buttons a:hover {
+        #downloads-section-h2 .download-buttons a:hover { /* Changed ID to point to the h2 */
             background-color: #0056b3; /* Darker blue on hover */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
         }
 
         /* --- Styling for the Recommendations Section --- */
-        #recommendations {
+        #recommendations-h2 { /* Changed ID to point to the h2 */
             padding: 60px 20px; /* Spacing around the section */
             background-color: #f9f9f9; /* Light grey background */
             text-align: center; /* Center the heading and items */
         }
 
-        #recommendations h2 {
+        #recommendations-h2 h2 { /* Changed ID to point to the h2 */
             color: #333;
             margin-bottom: 40px; /* Space below the heading */
             font-size: 2.5em;
@@ -435,19 +435,19 @@
 </head>
 <body>
     <div class="main-heading-buttons">
-        <a href="javascript:void(0);" onclick="scrollToTop()">Home</a>
+        <a href="#top" onclick="scrollToTop()">Home</a>
         <a href="#work-experience">Work Experience</a>
         <a href="#skills">Skills</a>
         <a href="#project-details">Project Details</a>
         <a href="#hobbies-interests">Hobbies & Interests</a>
         <a href="#qualification">Qualification</a>
-        <a href="#downloads-section">Go to Downloads</a>
-        <a href="#recommendations">Recommendations</a>
-        <a href="#blogs">Blogs</a>
-        <a href="#contact">Contact</a>
+        <a href="#downloads-h2">Downloads</a>
+        <a href="#recommendations-h2">Recommendations</a>
+        <a href="#blogs-h3">Blogs</a>
+        <a href="#contact-h2">Contact</a>
     </div>
 
-    <h1 data-aos="zoom-in">Kishor Sankaran - Document Management Expert</h1>
+    <h1 id="top" data-aos="zoom-in">Kishor Sankaran - Document Management Expert</h1>
 
     <div class="profile-summary" data-aos="fade-up">
         <div class="profile-column">
@@ -621,14 +621,16 @@
 </div>
 
 
-    <h3 id="qualification" data-aos="fade-up">Academic Qualifications & Achievements</h3>
-    <p data-aos="fade-up" data-aos-delay="100"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
-    <p data-aos="fade-up" data-aos-delay="200"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
-    <p data-aos="fade-up" data-aos-delay="300"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
-    <p data-aos="fade-up" data-aos-delay="400"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+    <div class="section-box" data-aos="fade-up">
+        <h3 id="qualification">Academic Qualifications & Achievements</h3>
+        <p data-aos="fade-up" data-aos-delay="100"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
+        <p data-aos="fade-up" data-aos-delay="200"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
+        <p data-aos="fade-up" data-aos-delay="300"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
+        <p data-aos="fade-up" data-aos-delay="400"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+    </div>
 
-    <section id="downloads-section" data-aos="zoom-in">
-        <h2>Downloads</h2>
+    <section id="downloads-section-wrapper" data-aos="zoom-in">
+        <h2 id="downloads-h2">Downloads</h2>
         <div class="download-buttons">
             <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
                 Download Resume
@@ -639,8 +641,8 @@
         </div>
     </section>
 
-    <section id="recommendations" data-aos="fade-up">
-        <h2>Professional Praise</h2>
+    <section id="recommendations-section-wrapper" data-aos="fade-up">
+        <h2 id="recommendations-h2">Professional Praise</h2>
 
         <div class="recommendation-item" data-aos="fade-up" data-aos-delay="100">
             <div class="recommender-info">
@@ -659,55 +661,32 @@
         </div>
     </section>
 
-    <h3 id="blogs" data-aos="fade-up">Blogs</h3>
-    <div style="text-align: center; margin-top: 20px;" data-aos="fade-up" data-aos-delay="100">
-        <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">
-            Visit Blog <span class="new-blog-tag">New</span>
-        </a>
+    <div class="section-box" data-aos="zoom-in">
+        <h3 id="blogs-h3">Blogs <span class="new-blog-tag">NEW</span></h3>
+        <div class="section-content">
+            <p>Stay tuned for new blog posts!</p>
+            </div>
     </div>
 
-    <div class="contact-section" id="contact" data-aos="fade-up">
-        <p>Contact me:</p>
-        <p>Mail me @: <a href="mailto:kishornambisan@gmail.com">kishornambisan@gmail.com</a></p>
-        <p>Visit my LinkedIn Profile @ <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b">https://www.linkedin.com/in/kishor-sankaran-30649612b</a></p>
-        <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
+    <div class="contact-section" data-aos="fade-up">
+        <h2 id="contact-h2">Contact Me</h2>
+        <p>Feel free to reach out:</p>
+        <p>Email: <a href="mailto:kishorsankaran@gmail.com">kishorsankaran@gmail.com</a></p>
+        <p>Phone: <a href="tel:+97455800049">+974 5580 0049</a> (Qatar)</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/" target="_blank">linkedin.com/in/kishor-sankaran-30649612b</a></p>
+        <p>Instagram: <a href="https://www.instagram.com/mr_kishor_sankaran/" target="_blank">instagram.com/mr_kishor_sankaran</a></p>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({
-            duration: 1000, // Duration of animation (in ms)
-            once: true,      // Whether animation should happen only once - default
-            mirror: false,  // Whether elements should animate out while scrolling past them
-            offset: 100,    // Offset (in px) from the top of the screen where the animation should start
+            duration: 1000, // animation duration
+            once: true, // whether animation should happen only once - while scrolling down
         });
 
-        // Add smooth scrolling behavior for push buttons (your existing code)
-        document.addEventListener("DOMContentLoaded", function() {
-            const buttons = document.querySelectorAll(".main-heading-buttons a");
-            buttons.forEach(button => {
-                button.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    const targetId = button.getAttribute("href");
-                    if (targetId && targetId !== "javascript:void(0);" && targetId.startsWith("#")) {
-                        const targetSection = document.querySelector(targetId);
-                        if (targetSection) {
-                            window.scrollTo({
-                                top: targetSection.offsetTop,
-                                behavior: "smooth"
-                            });
-                        }
-                    }
-                });
-            });
-        });
-
+        // Function to scroll to the top
         function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
