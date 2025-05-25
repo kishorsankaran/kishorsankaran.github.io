@@ -127,6 +127,16 @@
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
         }
+	/* NEW: Left-align text within skills-box for project details */
+        .skills-box.project-details-content p {
+            text-align: left;
+        }
+
+        /* Also, ensure strong tags within skills-box are NOT centered if they contain left-aligned text */
+        .skills-box.project-details-content strong {
+            text-align: left; /* Override previous center alignment for strong in this specific context */
+            display: block; /* Keep it block to take full width */
+        }
 
         .work-experience-box p,
         .skills-box p {
@@ -519,36 +529,38 @@
     <div class="section-box" data-aos="fade-up" data-aos-delay="100"> 
     <h3 id="project-details" class="section-heading">Project Details</h3>
     <div class="section-content skills-content">
-        <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
-           <p class="left-align"><strong>Design & Build Contract for Rehabilitation of Doha South</strong></p>
-            <p>Contractor: VA Tech Wabag Limited</p>
-            <p>Client: Public Works Authority (PWA)</p>
-            <p>Consultant: Parsons International Limited</p>
-        </div>
+        <div class="section-box" data-aos="fade-up" data-aos-delay="100">
+        <h3 id="project-details" class="section-heading">Project Details</h3>
+        <div class="section-content skills-content">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="200">
+                <p><strong>Design & Build Contract for Rehabilitation of Doha South</strong></p>
+                <p>Contractor: VA Tech Wabag Limited</p>
+                <p>Client: Public Works Authority (PWA)</p>
+                <p>Consultant: Parsons International Limited</p>
+            </div>
 
-
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="300">
                 <p><strong>Roads & Infrastructure in Al Kheesa North & East (Rawat Al Hamama District) Package 02</strong></p>
                 <p>Contractor: China Railway Construction Corporation Ltd.</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WSP International</p>
             </div>
 
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="400">
                 <p><strong>Infrastructure FS Gap Mall of Qatar Area and Celebration Road Foul Sewer- Package 05</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Dar Al Handasah Consultant</p>
             </div>
 
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="500">
                 <p><strong>Road and Infrastructure in Rawdat Abal Heeran, MMUP Phase 2 Package 8 (DW015 – Package 1)</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="600">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="600">
                 <p><strong>Upgrade of Al Rayyan, Al Bustan and khalifa Street Doha, Qatar</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
@@ -556,19 +568,21 @@
                 <p>Consultant: WS Atkins & Partners Overseas</p>
             </div>
 
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="700">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="700">
                 <p><strong>Developments of Main Road in Zone 46</strong></p>
                 <p>Contractor: QBS International W.L.L</p>
                 <p>Client: Public Works Authority (PWA)</p>
                 <p>Consultant: Ital Consult</p>
             </div>
 
-            <div class="skills-box" data-aos="fade-up" data-aos-delay="800">
+            <div class="skills-box project-details-content" data-aos="fade-up" data-aos-delay="800">
                 <p><strong>Qatar National Convention Centre (QNCC)</strong></p>
                 <p>Contractor: Baytur Construction & Contracting Company</p>
                 <p>Client: Qatar Petroleum</p>
                 <p>Project Management: ASTAD and KEO International</p>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 
