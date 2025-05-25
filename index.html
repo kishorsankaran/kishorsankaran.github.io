@@ -127,7 +127,7 @@
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
         }
-	/* NEW: Left-align text within skills-box for project details */
+        /* NEW: Left-align text within skills-box for project details */
         .skills-box.project-details-content p {
             text-align: left;
         }
@@ -347,12 +347,23 @@
             display: inline-block; /* Allows padding/margin */
             margin-top: 10px;
             transition: color 0.3s ease; /* Smooth hover effect */
+            display: flex; /* Use flexbox for icon and text alignment */
+            align-items: center; /* Vertically align items */
+            justify-content: center; /* Center content horizontally */
         }
 
         .linkedin-link:hover {
             color: #0056b3; /* Darker blue on hover */
             text-decoration: underline; /* Underline on hover */
         }
+
+        .linkedin-logo {
+            width: 20px; /* Adjust size as needed */
+            height: 20px; /* Adjust size as needed */
+            margin-right: 8px; /* Space between logo and text */
+            vertical-align: middle; /* Align with text */
+        }
+
 
         /* NEW: Style for the "New" tag on Blogs button */
         .new-blog-tag {
@@ -491,7 +502,7 @@
                 <li>Developed dynamic reports and dashboards with Pivot Tables and Slicers for efficient data analysis and stakeholder reporting.</li>
                 <li>Mastered advanced formula creation (e.g., VLOOKUP, INDEX-MATCH, SUMIFS) for sophisticated data manipulation and analysis.</li>
                 <li>Ensured data integrity and enhanced readability through precise data formatting and validation techniques.</li>
-            </ul>
+                </ul>
                 </ul>
             </div>
 
@@ -526,7 +537,7 @@
         </div>
     </div>
 
-    <div class="section-box" data-aos="fade-up" data-aos-delay="100"> 
+    <div class="section-box" data-aos="fade-up" data-aos-delay="100">
     <h3 id="project-details" class="section-heading">Project Details</h3>
     <div class="section-content skills-content">
         <div class="section-box" data-aos="fade-up" data-aos-delay="100">
@@ -650,7 +661,10 @@
             <blockquote class="recommendation-text">
                 "I was employed as a Projects Director by Messrs QBS in Qatar for several projects including commencing in 2014 through to the end of 2016. Mr Sankaran was employed to manage the office administration and document control for the company’s flagship projects. I got to know Kishor very well during this time and found him to be extremely capable, diligent and efficient. He showed a great understanding of the company’s site management systems and the interaction with the wider company systems and those of the Supervision Consultants and Project Management Consultants employed by the Client. His department was subject to numerous audits, internally and externally, and were always confirmed to be of the highest standards. He is a very personable and gets on very well with his colleagues. He has all the technical and administrative skills required for this type of work. I would have no hesitation in recommending Kishor for any similar role and consider that he talents were underutilized and is capable of taking on much more responsibility. I commend him without reservation."
             </blockquote>
-            <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">View on LinkedIn</a>
+            <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="linkedin-link">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/480px-LinkedIn_logo_initials.png" alt="LinkedIn Logo" class="linkedin-logo">
+                View on LinkedIn
+            </a>
         </div>
         </section>
 
