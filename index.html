@@ -7,6 +7,146 @@
     <!-- Link to AOS CSS for animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables for use in inline scripts
+        window.firebaseApp = null;
+        window.db = null;
+        window.auth = null;
+        window.currentUserId = null; // Store the current user's ID (visitor's ID)
+
+        // Firebase Initialization and Authentication
+        async function initFirebaseAndAuth() {
+            try {
+                // Ensure __firebase_config is defined (provided by Canvas or empty if not)
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+                if (Object.keys(firebaseConfig).length === 0) {
+                    console.error("Firebase config is missing. Please ensure __firebase_config is provided.");
+                    return;
+                }
+
+                window.firebaseApp = initializeApp(firebaseConfig);
+                window.db = getFirestore(window.firebaseApp);
+                window.auth = getAuth(window.firebaseApp);
+
+                // Sign in anonymously to get a unique user ID for the visitor session
+                await signInAnonymously(window.auth);
+                window.currentUserId = window.auth.currentUser.uid;
+                console.log("Firebase initialized and signed in anonymously. User ID:", window.currentUserId);
+
+                // Set up real-time listener for chat messages for this visitor
+                setupChatListener(window.currentUserId);
+
+            } catch (error) {
+                console.error("Error initializing Firebase or signing in:", error);
+                addMessage("Error connecting to chat service. Please try refreshing.", 'received');
+            }
+        }
+
+        // Setup Firestore Real-time Listener
+        function setupChatListener(visitorId) {
+            if (!window.db) {
+                console.error("Firestore not initialized.");
+                return;
+            }
+            const messagesCollectionRef = collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`);
+            // Query for messages belonging to this visitor's conversation, ordered by timestamp
+            const q = query(messagesCollectionRef, orderBy("timestamp", "asc"));
+
+            onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    const messageData = change.doc.data();
+                    // Only display messages relevant to this specific visitor's conversation
+                    // For human operator interface, all messages in the common collection can be displayed
+                    // but they need to be filtered by conversationId (which is visitorId here)
+                    if (messageData.conversationId === visitorId) {
+                        if (change.type === "added") {
+                            addMessage(messageData.message, messageData.senderType);
+                        }
+                        // Could add logic for "modified" or "removed" if needed later
+                    }
+                });
+            }, (error) => {
+                console.error("Error listening to messages:", error);
+                addMessage("Error loading chat messages.", 'received');
+            });
+        }
+
+        // Make functions available globally for HTML elements
+        window.initFirebaseAndAuth = initFirebaseAndAuth;
+        window.addMessage = function(message, type) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', type);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        };
+
+        window.callGeminiAPI = async function(userPrompt) {
+            window.addMessage("Kishor is thinking...", 'ai');
+
+            const context = `You are a helpful AI assistant representing Kishor Sankaran. Kishor is a Document Management Expert with over 12 years of experience, currently in Doha, Qatar. He specializes in optimizing information systems, Aconex, MS Excel, computer databases, and client-specific platforms like PDLM, FCTS, APMS. He has worked on projects like Doha South Rehabilitation, Al Kheesa North & East Roads, Mall of Qatar Infrastructure, Al Rayyan/Al Bustan/Khalifa Street Upgrade, Zone 46 Main Road Development, and Qatar National Convention Centre. His hobbies include reading, quest for knowledge, cooking, drawing, photography, and listening to music. He holds a Bachelor's Degree in Philosophy and a Certificate on Aconex Getting Started. When answering, base your response on the provided information about Kishor and keep it concise and professional. If a question is outside Kishor's professional details or general knowledge, politely state that you are an AI assistant and cannot assist with that specific query.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: `${context}\n\nUser query: ${userPrompt}` }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = "AIzaSyCCQyoSf5hRnn6udgecoXuiYpvAzo3_qkM"; // Your API Key
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                // Remove loading message
+                const chatMessages = document.getElementById('chat-messages');
+                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
+                     chatMessages.removeChild(chatMessages.lastChild);
+                }
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Add AI response to Firestore
+                    await addDoc(collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`), {
+                        conversationId: window.currentUserId,
+                        userId: window.currentUserId, // AI response is "for" this user
+                        message: text,
+                        timestamp: serverTimestamp(),
+                        senderType: 'ai'
+                    });
+                } else {
+                    window.addMessage("Sorry, I couldn't generate a response at this time. Please try again.", 'ai');
+                    if (result.error) {
+                        console.error('Gemini API Error details:', result.error);
+                    }
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                // Remove loading message
+                const chatMessages = document.getElementById('chat-messages');
+                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
+                     chatMessages.removeChild(chatMessages.lastChild);
+                }
+                window.addMessage("There was an error connecting to the AI. Please try again later.", 'ai');
+            }
+        };
+
+    </script>
+
     <style>
         /* Cover Page Styles */
         #cover-page {
@@ -583,6 +723,20 @@
             text-align: left; /* Text aligns left within bubble */
         }
 
+        .message.ai {
+            background-color: #e6f7ff; /* Light blue for AI messages */
+            align-self: flex-start;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .message.operator {
+            background-color: #ffe6cc; /* Light orange for operator messages */
+            align-self: flex-start;
+            margin-right: auto;
+            text-align: left;
+        }
+
         #chat-input {
             width: calc(100% - 20px); /* Full width minus padding */
             padding: 10px;
@@ -638,6 +792,23 @@
         /* Hide chat bubble when chat container is open */
         #chat-container.open + #chat-bubble {
             display: none;
+        }
+
+        #ask-ai-btn {
+            background-color: #6c757d; /* Grey for "Ask AI" button */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            align-self: center; /* Center the button in chat */
+        }
+
+        #ask-ai-btn:hover {
+            background-color: #5a6268;
         }
     </style> 
 </head>
@@ -893,6 +1064,7 @@
         </div>
         <input type="text" id="chat-input" placeholder="Type your message...">
         <button id="chat-send-btn">Send</button>
+        <button id="ask-ai-btn">Ask AI</button> <!-- New button for explicit AI interaction -->
     </div>
     <!-- End Real-time Chat Box HTML -->
 
@@ -915,6 +1087,13 @@
         document.addEventListener("DOMContentLoaded", function() {
             const coverPage = document.getElementById('cover-page');
             const mainContent = document.getElementById('main-content');
+            
+            // Initialize Firebase and Auth on DOMContentLoaded
+            if (typeof initFirebaseAndAuth === 'function') {
+                initFirebaseAndAuth();
+            } else {
+                console.error("Firebase initialization function not found. Ensure script type='module' is correctly loaded.");
+            }
 
             // Function to show main content and hide cover
             function enterWebsite() {
@@ -963,19 +1142,13 @@
             });
         }
 
-        // New JavaScript for Real-time Chat and Gemini API Integration
-        // IMPORTANT: The URL here must match the URL where your Node.js backend server is running.
-        // For local testing (e.g., using `node server.js`), it's 'http://localhost:3000'.
-        // For deployment (e.g., to a cloud service), it will be your actual deployed backend server URL.
-        const socket = io('http://localhost:3000'); 
-
         // Get chat elements
         const chatContainer = document.getElementById('chat-container');
         const chatBubble = document.getElementById('chat-bubble');
         const chatCloseBtn = document.getElementById('chat-close-btn');
-        const chatMessages = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
         const chatSendBtn = document.getElementById('chat-send-btn');
+        const askAiBtn = document.getElementById('ask-ai-btn'); // New button reference
 
         // Function to toggle chat box visibility
         function toggleChat() {
@@ -988,130 +1161,58 @@
         chatBubble.addEventListener('click', toggleChat);
         chatCloseBtn.addEventListener('click', toggleChat);
 
-        // Function to add a message to the chat display
-        function addMessage(message, type) { // type can be 'sent', 'received', or 'ai'
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message', type);
-            messageElement.textContent = message;
-            chatMessages.appendChild(messageElement);
-            // Scroll to the bottom to see the latest message
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Function to call the Gemini API
-        async function callGeminiAPI(userPrompt) {
-            // Display a loading message
-            addMessage("Kishor is thinking...", 'ai'); 
-
-            // Provide context about Kishor Sankaran for the LLM
-            const context = `You are a helpful AI assistant representing Kishor Sankaran. Kishor is a Document Management Expert with over 12 years of experience, currently in Doha, Qatar. He specializes in optimizing information systems, Aconex, MS Excel, computer databases, and client-specific platforms like PDLM, FCTS, APMS. He has worked on projects like Doha South Rehabilitation, Al Kheesa North & East Roads, Mall of Qatar Infrastructure, Al Rayyan/Al Bustan/Khalifa Street Upgrade, Zone 46 Main Road Development, and Qatar National Convention Centre. His hobbies include reading, quest for knowledge, cooking, drawing, photography, and listening to music. He holds a Bachelor's Degree in Philosophy and a Certificate on Aconex Getting Started. When answering, base your response on the provided information about Kishor and keep it concise and professional. If a question is outside Kishor's professional details or general knowledge, politely state that you are an AI assistant and cannot assist with that specific query.`;
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: `${context}\n\nUser query: ${userPrompt}` }] });
-
-            const payload = { contents: chatHistory };
-            // >>> IMPORTANT: PASTE YOUR GOOGLE GEMINI API KEY HERE <<<
-            // Go to https://aistudio.google.com/ to get your API key.
-            // Replace "YOUR_GEMINI_API_KEY_HERE" with your actual key.
-            // Example: const apiKey = "AIzaSyXXXXXXXXXXXXXXXXXXXXX_YOUR_KEY_";
-            const apiKey = "AIzaSyCCQyoSf5hRnn6udgecoXuiYpvAzo3_qkM"; 
-
-            // --- LOCAL TESTING REMINDER ---
-            // If you are running this file directly in your browser (not through a hosted environment),
-            // you MUST replace "YOUR_GEMINI_API_KEY_HERE" with your actual API key.
-            // Otherwise, API calls will fail with a "PERMISSION_DENIED" (403) or "INVALID_ARGUMENT" (400) error.
-            /* Removed the alert for smoother experience while debugging key issues.
-            if (apiKey === "YOUR_GEMINI_API_KEY_HERE") {
-                // Remove loading message if it exists
-                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
-                     chatMessages.removeChild(chatMessages.lastChild);
-                }
-                addMessage("Please obtain a Google Gemini API key from https://aistudio.google.com/ and replace 'YOUR_GEMINI_API_KEY_HERE' in the code. AI chat will not work until then.", 'ai');
-                console.error("Gemini API Key missing! Please replace 'YOUR_GEMINI_API_KEY_HERE' with your actual key.");
-                return; // Stop execution if API key is missing
-            }
-            */
-            // --- END LOCAL TESTING REMINDER ---
-
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                // Log response status for debugging
-                console.log('Gemini API Response Status:', response.status, response.statusText);
-
-                const result = await response.json();
-
-                // Log the full result object for debugging
-                console.log('Full Gemini API Result:', result);
-
-                // Remove loading message
-                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
-                     chatMessages.removeChild(chatMessages.lastChild);
-                }
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    addMessage(text, 'ai'); // Display AI response
-                } else {
-                    addMessage("Sorry, I couldn't generate a response at this time. Please try again.", 'ai');
-                    // Log specific reason if available
-                    if (result.error) {
-                        console.error('Gemini API Error details:', result.error);
-                    }
-                }
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                // Remove loading message
-                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
-                     chatMessages.removeChild(chatMessages.lastChild);
-                }
-                addMessage("There was an error connecting to the AI. Please try again later.", 'ai');
-            }
-        }
-
         // Handle sending messages from the visitor
-        chatSendBtn.addEventListener('click', () => {
+        chatSendBtn.addEventListener('click', async () => {
             const message = chatInput.value.trim();
-            if (message) {
-                addMessage(message, 'sent'); // Display the message as "sent" by the current user
-                // Call the Gemini API with the user's message
-                callGeminiAPI(message); 
+            if (message && window.db && window.currentUserId) {
+                // Add message to Firestore (will be displayed via onSnapshot listener)
+                await addDoc(collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`), {
+                    conversationId: window.currentUserId, // Use visitor's ID as conversation ID
+                    userId: window.currentUserId,
+                    message: message,
+                    timestamp: serverTimestamp(), // Use server timestamp for ordering
+                    senderType: 'sent' // 'sent' means sent by the visitor
+                });
                 chatInput.value = ''; // Clear input field
             }
         });
 
-        // Allow sending message with Enter key
+        // Event listener for "Ask AI" button
+        askAiBtn.addEventListener('click', () => {
+            const message = chatInput.value.trim(); // Use current input value or last sent message
+            if (message) {
+                // Trigger AI response only when this button is clicked
+                window.callGeminiAPI(message); 
+                chatInput.value = ''; // Clear input field
+            } else {
+                window.addMessage("Please type a question before asking the AI.", 'received');
+            }
+        });
+
+        // Allow sending message with Enter key (sends to human operator first)
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 chatSendBtn.click();
             }
         });
 
-        // Handle Socket.IO events (for general chat, not directly tied to AI)
+        // The existing Socket.IO logic remains for real-time chat between *visitors* if you use it.
+        // For persistence and human operator interface, Firestore is used.
+        const socket = io('http://localhost:3000'); 
         socket.on('connect', () => {
             console.log('Connected to chat server!');
-            addMessage('You are now connected to the chat.', 'received'); // Message for the visitor
+            // addMessage('You are now connected to the real-time chat.', 'received'); // Uncomment if you want to explicitly mention Socket.IO
         });
-
         socket.on('chat message', (msg) => {
             // These messages are from other connected clients via the Node.js server
-            console.log('Incoming message from server:', msg);
-            addMessage(msg, 'received');
+            console.log('Incoming message from Socket.IO server:', msg);
+            // If you want to integrate Socket.IO messages into Firestore, you'd handle it here.
+            // For now, these are separate from the Firestore-persisted chat.
+            // addMessage(msg, 'received'); // Uncomment if you want to display these.
         });
-
-        // Handle disconnection
         socket.on('disconnect', () => {
             console.log('Disconnected from chat server.');
-            addMessage('Disconnected from chat. Live chat may not be available.', 'received');
+            // addMessage('Disconnected from real-time chat. Live chat between visitors may not be available.', 'received');
         });
     </script>
 </body>
