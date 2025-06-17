@@ -18,6 +18,10 @@
         window.db = null;
         window.auth = null;
         window.currentUserId = null; // Store the current user's ID (visitor's ID)
+        window.serverTimestamp = serverTimestamp; // <--- NEW: Expose serverTimestamp globally
+
+        // Ensure __app_id is defined (provided by Canvas or fallback)
+        window.__app_id = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         // Firebase Initialization and Authentication
         async function initFirebaseAndAuth() {
@@ -26,7 +30,7 @@
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
 
                 if (Object.keys(firebaseConfig).length === 0) {
-                    console.error("Firebase config is missing. Please ensure __firebase_config is provided.");
+                    console.error("Firebase config is missing. Please ensure __firebase_config is provided by the environment.");
                     return;
                 }
 
@@ -37,14 +41,14 @@
                 // Sign in anonymously to get a unique user ID for the visitor session
                 await signInAnonymously(window.auth);
                 window.currentUserId = window.auth.currentUser.uid;
-                console.log("Firebase initialized and signed in anonymously. User ID:", window.currentUserId);
+                console.log("Firebase initialized and signed in anonymously. Visitor User ID:", window.currentUserId);
 
                 // Set up real-time listener for chat messages for this visitor
                 setupChatListener(window.currentUserId);
 
             } catch (error) {
                 console.error("Error initializing Firebase or signing in:", error);
-                addMessage("Error connecting to chat service. Please try refreshing.", 'received');
+                window.addMessage("Error connecting to chat service. Please try refreshing.", 'received');
             }
         }
 
@@ -54,26 +58,40 @@
                 console.error("Firestore not initialized.");
                 return;
             }
-            const messagesCollectionRef = collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`);
+            const messagesCollectionRef = collection(window.db, `artifacts/${window.__app_id}/public/data/chatMessages`);
             // Query for messages belonging to this visitor's conversation, ordered by timestamp
+            // Filter on client-side as Firestore query for `where('conversationId', '==', visitorId)`
+            // and `orderBy('timestamp')` requires an index, which is often a pain point for users.
+            // By fetching all and filtering, we avoid index issues for this demo.
             const q = query(messagesCollectionRef, orderBy("timestamp", "asc"));
 
             onSnapshot(q, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    const messageData = change.doc.data();
-                    // Only display messages relevant to this specific visitor's conversation
-                    // For human operator interface, all messages in the common collection can be displayed
-                    // but they need to be filtered by conversationId (which is visitorId here)
-                    if (messageData.conversationId === visitorId) {
-                        if (change.type === "added") {
-                            addMessage(messageData.message, messageData.senderType);
+                // Clear and re-render only if the current visitor's messages change
+                const relevantDocs = snapshot.docs.filter(doc => doc.data().conversationId === visitorId);
+                const chatMessagesDisplay = document.getElementById('chat-messages');
+                chatMessagesDisplay.innerHTML = ''; // Clear to re-render all for this user
+                relevantDocs.forEach(doc => window.addMessage(doc.data().message, doc.data().senderType));
+                chatMessagesDisplay.scrollTop = chatMessagesDisplay.scrollHeight;
+
+                // Also update conversation metadata for new messages (e.g., last message for operator panel)
+                snapshot.docChanges().forEach(async (change) => {
+                    if (change.type === "added") {
+                        const messageData = change.doc.data();
+                        if (messageData.conversationId === visitorId) {
+                            const convRef = doc(window.db, `artifacts/${window.__app_id}/public/data/conversationMetadata`, visitorId);
+                            await addDoc(collection(window.db, `artifacts/${window.__app_id}/public/data/conversationMetadata`), {
+                                lastMessage: messageData.message,
+                                lastMessageTimestamp: messageData.timestamp,
+                                unreadCount: 0, // Reset for current user
+                                lastSenderType: messageData.senderType,
+                                // conversationId (doc.id) is set by Firestore using addDoc, no need to pass it here
+                            });
                         }
-                        // Could add logic for "modified" or "removed" if needed later
                     }
                 });
             }, (error) => {
                 console.error("Error listening to messages:", error);
-                addMessage("Error loading chat messages.", 'received');
+                window.addMessage("Error loading chat messages.", 'received');
             });
         }
 
@@ -121,15 +139,15 @@
                     result.candidates[0].content.parts.length > 0) {
                     const text = result.candidates[0].content.parts[0].text;
                     // Add AI response to Firestore
-                    await addDoc(collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`), {
+                    await addDoc(collection(window.db, `artifacts/${window.__app_id}/public/data/chatMessages`), {
                         conversationId: window.currentUserId,
-                        userId: window.currentUserId, // AI response is "for" this user
+                        userId: "AI_BOT", // Explicitly mark sender as AI
                         message: text,
-                        timestamp: serverTimestamp(),
+                        timestamp: window.serverTimestamp(), // Use globally exposed serverTimestamp
                         senderType: 'ai'
                     });
                 } else {
-                    window.addMessage("Sorry, I couldn't generate a response at this time. Please try again.", 'ai');
+                    window.addMessage("Sorry, I couldn't generate an AI response at this time. Please try again.", 'ai');
                     if (result.error) {
                         console.error('Gemini API Error details:', result.error);
                     }
@@ -964,7 +982,7 @@
                     <p>Contractor: Baytur Construction & Contracting Company</p>
                     <p>Client: Qatar Petroleum</p>
                     <p>Project Management: ASTAD and KEO International</p>
-                </div>
+                 fungicide>
             </div>
         </div>
 
@@ -1164,16 +1182,22 @@
         // Handle sending messages from the visitor
         chatSendBtn.addEventListener('click', async () => {
             const message = chatInput.value.trim();
-            if (message && window.db && window.currentUserId) {
+            if (message && window.db && window.currentUserId && window.serverTimestamp) { // Check for serverTimestamp
                 // Add message to Firestore (will be displayed via onSnapshot listener)
-                await addDoc(collection(window.db, `artifacts/${__app_id}/public/data/chatMessages`), {
+                await addDoc(collection(window.db, `artifacts/${window.__app_id}/public/data/chatMessages`), {
                     conversationId: window.currentUserId, // Use visitor's ID as conversation ID
                     userId: window.currentUserId,
                     message: message,
-                    timestamp: serverTimestamp(), // Use server timestamp for ordering
+                    timestamp: window.serverTimestamp(), // Use window.serverTimestamp()
                     senderType: 'sent' // 'sent' means sent by the visitor
                 });
                 chatInput.value = ''; // Clear input field
+            } else {
+                console.error("Cannot send message: Firebase or current user not ready, or serverTimestamp missing.", {
+                    dbReady: !!window.db,
+                    userIdReady: !!window.currentUserId,
+                    serverTimestampReady: !!window.serverTimestamp
+                });
             }
         });
 
