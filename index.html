@@ -63,7 +63,7 @@
         @keyframes pulse-text {
             0% { opacity: 0.7; }
             50% { opacity: 1; }
-            100% { opacity: 0.7; }
+            100% { opacity: 1; } /* Changed to ensure full visibility at peak */
         }
 
 
@@ -1013,7 +1013,24 @@
             // >>> IMPORTANT: PASTE YOUR GOOGLE GEMINI API KEY HERE <<<
             // Go to https://aistudio.google.com/ to get your API key.
             // Replace "YOUR_GEMINI_API_KEY_HERE" with your actual key.
-            const apiKey = "YOUR_GEMINI_API_KEY_HERE"; // Currently empty, causes PERMISSION_DENIED
+            // Example: const apiKey = "AIzaSyXXXXXXXXXXXXXXXXXXXXX_YOUR_KEY_";
+            const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+
+            // --- LOCAL TESTING REMINDER ---
+            // If you are running this file directly in your browser (not through a hosted environment),
+            // you MUST replace "YOUR_GEMINI_API_KEY_HERE" with your actual API key.
+            // Otherwise, API calls will fail with a "PERMISSION_DENIED" (403) or "INVALID_ARGUMENT" (400) error.
+            if (apiKey === "YOUR_GEMINI_API_KEY_HERE") {
+                // Remove loading message if it exists
+                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
+                     chatMessages.removeChild(chatMessages.lastChild);
+                }
+                addMessage("Please obtain a Google Gemini API key from https://aistudio.google.com/ and replace 'YOUR_GEMINI_API_KEY_HERE' in the code. AI chat will not work until then.", 'ai');
+                console.error("Gemini API Key missing! Please replace 'YOUR_GEMINI_API_KEY_HERE' with your actual key.");
+                return; // Stop execution if API key is missing
+            }
+            // --- END LOCAL TESTING REMINDER ---
+
 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
