@@ -1010,7 +1010,11 @@
             chatHistory.push({ role: "user", parts: [{ text: `${context}\n\nUser query: ${userPrompt}` }] });
 
             const payload = { contents: chatHistory };
-            const apiKey = ""; // Canvas will automatically provide the API key
+            // >>> IMPORTANT: PASTE YOUR GOOGLE GEMINI API KEY HERE <<<
+            // Go to https://aistudio.google.com/ to get your API key.
+            // Replace "YOUR_GEMINI_API_KEY_HERE" with your actual key.
+            const apiKey = "YOUR_GEMINI_API_KEY_HERE"; // Currently empty, causes PERMISSION_DENIED
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
             try {
