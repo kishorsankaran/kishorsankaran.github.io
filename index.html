@@ -622,7 +622,7 @@
             width: 60px;
             height: 60px;
             font-size: 2em;
-            display: flex;
+            display: flex; /* Set display to flex for visibility */
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -893,9 +893,11 @@
         </div>
         <input type="text" id="chat-input" placeholder="Type your message...">
         <button id="chat-send-btn">Send</button>
-        <button id="chat-bubble">💬</button> <!-- Chat bubble icon -->
     </div>
     <!-- End Real-time Chat Box HTML -->
+
+    <!-- Chat bubble icon moved outside the chat container -->
+    <button id="chat-bubble">💬</button> 
 
     <!-- Global Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -961,7 +963,7 @@
             });
         }
 
-        // New JavaScript for Real-time Chat
+        // New JavaScript for Real-time Chat and Gemini API Integration
         // IMPORTANT: The URL here must match the URL where your Node.js backend server is running.
         // For local testing (e.g., using `node server.js`), it's 'http://localhost:3000'.
         // For deployment (e.g., to a cloud service), it will be your actual deployed backend server URL.
@@ -987,7 +989,7 @@
         chatCloseBtn.addEventListener('click', toggleChat);
 
         // Function to add a message to the chat display
-        function addMessage(message, type) { // type can be 'sent' or 'received'
+        function addMessage(message, type) { // type can be 'sent', 'received', or 'ai'
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', type);
             messageElement.textContent = message;
@@ -996,30 +998,57 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // --- Socket.IO Client Logic ---
+        // Function to call the Gemini API
+        async function callGeminiAPI(userPrompt) {
+            // Display a loading message
+            addMessage("Kishor is thinking...", 'ai'); 
 
-        // Connect to the server
-        socket.on('connect', () => {
-            console.log('Connected to chat server!');
-            addMessage('You are now connected to the chat.', 'received'); // Message for the visitor
-        });
+            // Provide context about Kishor Sankaran for the LLM
+            const context = `You are a helpful AI assistant representing Kishor Sankaran. Kishor is a Document Management Expert with over 12 years of experience, currently in Doha, Qatar. He specializes in optimizing information systems, Aconex, MS Excel, computer databases, and client-specific platforms like PDLM, FCTS, APMS. He has worked on projects like Doha South Rehabilitation, Al Kheesa North & East Roads, Mall of Qatar Infrastructure, Al Rayyan/Al Bustan/Khalifa Street Upgrade, Zone 46 Main Road Development, and Qatar National Convention Centre. His hobbies include reading, quest for knowledge, cooking, drawing, photography, and listening to music. He holds a Bachelor's Degree in Philosophy and a Certificate on Aconex Getting Started. When answering, base your response on the provided information about Kishor and keep it concise and professional. If a question is outside Kishor's professional details or general knowledge, politely state that you are an AI assistant and cannot assist with that specific query.`;
 
-        // Listen for incoming messages from the server
-        socket.on('chat message', (msg) => {
-            // All messages received from the server (that were broadcasted)
-            // will be considered 'received' by the current client (the visitor).
-            console.log('Incoming message from server:', msg);
-            addMessage(msg, 'received');
-        });
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: `${context}\n\nUser query: ${userPrompt}` }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will automatically provide the API key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                // Remove loading message
+                chatMessages.removeChild(chatMessages.lastChild);
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    addMessage(text, 'ai'); // Display AI response
+                } else {
+                    addMessage("Sorry, I couldn't generate a response at this time. Please try again.", 'ai');
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                // Remove loading message
+                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
+                     chatMessages.removeChild(chatMessages.lastChild);
+                }
+                addMessage("There was an error connecting to the AI. Please try again later.", 'ai');
+            }
+        }
 
         // Handle sending messages from the visitor
         chatSendBtn.addEventListener('click', () => {
             const message = chatInput.value.trim();
             if (message) {
-                // Display the message as "sent" by the current user (visitor)
-                addMessage(message, 'sent');
-                // Send the message to the backend server
-                socket.emit('chat message', message);
+                addMessage(message, 'sent'); // Display the message as "sent" by the current user
+                // Call the Gemini API with the user's message
+                callGeminiAPI(message); 
                 chatInput.value = ''; // Clear input field
             }
         });
@@ -1031,10 +1060,22 @@
             }
         });
 
+        // Handle Socket.IO events (for general chat, not directly tied to AI)
+        socket.on('connect', () => {
+            console.log('Connected to chat server!');
+            addMessage('You are now connected to the chat.', 'received'); // Message for the visitor
+        });
+
+        socket.on('chat message', (msg) => {
+            // These messages are from other connected clients via the Node.js server
+            console.log('Incoming message from server:', msg);
+            addMessage(msg, 'received');
+        });
+
         // Handle disconnection
         socket.on('disconnect', () => {
             console.log('Disconnected from chat server.');
-            addMessage('Disconnected from chat.', 'received');
+            addMessage('Disconnected from chat. Live chat may not be available.', 'received');
         });
     </script>
 </body>
