@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kishor Sankaran - Document Management Expert</title>
 
+    <!-- Link to AOS CSS for animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
@@ -68,7 +69,7 @@
 
         /* Existing Styles (from your provided code) */
         body {
-            font-family: Calibri, Arial, sans-serif;
+            font-family: Calibri, Arial, sans-serif; /* Your original font-family is preserved */
             margin: 20px;
             background-color: #E2EBF5; /* Pearl White background */
             color: #000000; /* Black text color */
@@ -271,10 +272,10 @@
             margin: 5px;
             padding: 8px 16px;
             background-color: #A8D0C2;
-            color: #5D605F;
+            color: #0F1010;
             text-decoration: none;
             border-radius: 5px;
-            border: 1px solid #496f8e;
+            border: 1px solid #D1DAD7;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
         }
@@ -499,7 +500,146 @@
                 margin: 10px auto;
             }
         }
-    </style>
+
+        /* --- Real-time Chat Box Styles (New) --- */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px; /* Adjust width as needed */
+            height: 400px; /* Adjust height as needed */
+            background-color: #f0f0f0; /* Light background for the chat box */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide scrollbars if content overflows */
+            z-index: 1000; /* Ensure it's above other content */
+            font-family: Arial, sans-serif; /* Consistency with your portfolio font */
+
+            /* Initially hidden, will be shown by JS when bubble is clicked */
+            transform: translateY(100%) scale(0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+
+        #chat-container.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #chat-header {
+            background-color: #007bff; /* Matching your blue highlight */
+            color: white;
+            padding: 10px 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+        }
+
+        #chat-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 1;
+        }
+
+        #chat-messages {
+            flex-grow: 1; /* Takes up available space */
+            padding: 10px;
+            overflow-y: auto; /* Scroll for messages */
+            background-color: #ffffff; /* White background for messages area */
+            border-bottom: 1px solid #eee;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .message.sent {
+            background-color: #dcf8c6; /* Light green for sent messages */
+            align-self: flex-end; /* Align to the right */
+            margin-left: auto; /* Pushes to the right */
+            text-align: right; /* Text aligns right within bubble */
+        }
+
+        .message.received {
+            background-color: #e0e0e0; /* Gray for received messages */
+            align-self: flex-start; /* Align to the left */
+            margin-right: auto; /* Pushes to the left */
+            text-align: left; /* Text aligns left within bubble */
+        }
+
+        #chat-input {
+            width: calc(100% - 20px); /* Full width minus padding */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+            outline: none;
+            font-size: 1em;
+            margin: 10px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        #chat-send-btn {
+            background-color: #28a745; /* Green for send button */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1em;
+            width: calc(100% - 20px);
+            margin: 0 10px 10px 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        #chat-send-btn:hover {
+            background-color: #218838;
+        }
+
+        #chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff; /* Matching your blue highlight */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001; /* Above the chat container */
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #chat-bubble:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hide chat bubble when chat container is open */
+        #chat-container.open + #chat-bubble {
+            display: none;
+        }
+    </style> 
 </head>
 <body>
     <div id="cover-page">
@@ -581,7 +721,6 @@
                         <li>Generated comprehensive reports on document status, overdue items, and communication flows to support project management decisions.</li>
                     </ul>
                 </div>
-
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
                     <p><strong>Computer Database</strong></p>
                     <ul>
@@ -689,7 +828,6 @@
                     <p><strong>Listening to Music</strong></p>
                     <p>Music is my constant companion—whether it’s the timeless classics of the 60s, 70s, and 80s or the latest chart-toppers. I enjoy a diverse range of genres and languages, from Hindi, English, and Malayalam to Tamil. Music lifts my spirits, stirs memories, and enhances every mood and moment.</p>
                 </div>
-
             </div>
         </div>
 
@@ -742,7 +880,27 @@
             <p>Visit my LinkedIn Profile @ <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b">https://www.linkedin.com/in/kishor-sankaran-30649612b</a></p>
             <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
         </div>
-    </div> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    </div> 
+    
+    <!-- Real-time Chat Box HTML (New) -->
+    <div id="chat-container">
+        <div id="chat-header">
+            Let's Chat!
+            <button id="chat-close-btn">&times;</button>
+        </div>
+        <div id="chat-messages">
+            <!-- Messages will appear here -->
+        </div>
+        <input type="text" id="chat-input" placeholder="Type your message...">
+        <button id="chat-send-btn">Send</button>
+        <button id="chat-bubble">💬</button> <!-- Chat bubble icon -->
+    </div>
+    <!-- End Real-time Chat Box HTML -->
+
+    <!-- Global Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Socket.IO client script - MUST load before your custom chat script -->
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -802,19 +960,82 @@
                 behavior: "smooth"
             });
         }
+
+        // New JavaScript for Real-time Chat
+        // IMPORTANT: The URL here must match the URL where your Node.js backend server is running.
+        // For local testing (e.g., using `node server.js`), it's 'http://localhost:3000'.
+        // For deployment (e.g., to a cloud service), it will be your actual deployed backend server URL.
+        const socket = io('http://localhost:3000'); 
+
+        // Get chat elements
+        const chatContainer = document.getElementById('chat-container');
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatCloseBtn = document.getElementById('chat-close-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+
+        // Function to toggle chat box visibility
+        function toggleChat() {
+            chatContainer.classList.toggle('open');
+            // Hide bubble if chat is open, show if closed (CSS handles this too but good for clarity)
+            chatBubble.style.display = chatContainer.classList.contains('open') ? 'none' : 'flex';
+        }
+
+        // Event listeners for opening/closing chat
+        chatBubble.addEventListener('click', toggleChat);
+        chatCloseBtn.addEventListener('click', toggleChat);
+
+        // Function to add a message to the chat display
+        function addMessage(message, type) { // type can be 'sent' or 'received'
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', type);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            // Scroll to the bottom to see the latest message
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // --- Socket.IO Client Logic ---
+
+        // Connect to the server
+        socket.on('connect', () => {
+            console.log('Connected to chat server!');
+            addMessage('You are now connected to the chat.', 'received'); // Message for the visitor
+        });
+
+        // Listen for incoming messages from the server
+        socket.on('chat message', (msg) => {
+            // All messages received from the server (that were broadcasted)
+            // will be considered 'received' by the current client (the visitor).
+            console.log('Incoming message from server:', msg);
+            addMessage(msg, 'received');
+        });
+
+        // Handle sending messages from the visitor
+        chatSendBtn.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                // Display the message as "sent" by the current user (visitor)
+                addMessage(message, 'sent');
+                // Send the message to the backend server
+                socket.emit('chat message', message);
+                chatInput.value = ''; // Clear input field
+            }
+        });
+
+        // Allow sending message with Enter key
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                chatSendBtn.click();
+            }
+        });
+
+        // Handle disconnection
+        socket.on('disconnect', () => {
+            console.log('Disconnected from chat server.');
+            addMessage('Disconnected from chat.', 'received');
+        });
     </script>
 </body>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6850fc39b671a7190e272ae6/1itu8ak4k';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 </html>
