@@ -1019,10 +1019,19 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                // Log response status for debugging
+                console.log('Gemini API Response Status:', response.status, response.statusText);
+
                 const result = await response.json();
 
+                // Log the full result object for debugging
+                console.log('Full Gemini API Result:', result);
+
                 // Remove loading message
-                chatMessages.removeChild(chatMessages.lastChild);
+                if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
+                     chatMessages.removeChild(chatMessages.lastChild);
+                }
 
                 if (result.candidates && result.candidates.length > 0 &&
                     result.candidates[0].content && result.candidates[0].content.parts &&
@@ -1031,6 +1040,10 @@
                     addMessage(text, 'ai'); // Display AI response
                 } else {
                     addMessage("Sorry, I couldn't generate a response at this time. Please try again.", 'ai');
+                    // Log specific reason if available
+                    if (result.error) {
+                        console.error('Gemini API Error details:', result.error);
+                    }
                 }
             } catch (error) {
                 console.error("Error calling Gemini API:", error);
