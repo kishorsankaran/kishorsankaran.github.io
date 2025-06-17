@@ -11,14 +11,14 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // <--- Added setDoc
 
         // Global Firebase variables for use in inline scripts
         window.firebaseApp = null;
         window.db = null;
         window.auth = null;
         window.currentUserId = null; // Store the current user's ID (visitor's ID)
-        window.serverTimestamp = serverTimestamp; // <--- NEW: Expose serverTimestamp globally
+        window.serverTimestamp = serverTimestamp; // Expose serverTimestamp globally
 
         // Ensure __app_id is defined (provided by Canvas or fallback)
         window.__app_id = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -26,11 +26,11 @@
         // Firebase Initialization and Authentication
         async function initFirebaseAndAuth() {
             try {
-                // Ensure __firebase_config is defined (provided by Canvas or empty if not)
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
 
                 if (Object.keys(firebaseConfig).length === 0) {
                     console.error("Firebase config is missing. Please ensure __firebase_config is provided by the environment.");
+                    window.addMessage("Firebase configuration missing. Chat will not function.", 'received');
                     return;
                 }
 
@@ -42,6 +42,13 @@
                 await signInAnonymously(window.auth);
                 window.currentUserId = window.auth.currentUser.uid;
                 console.log("Firebase initialized and signed in anonymously. Visitor User ID:", window.currentUserId);
+
+                // Enable chat input after Firebase is ready
+                document.getElementById('chat-input').disabled = false;
+                document.getElementById('chat-send-btn').disabled = false;
+                document.getElementById('ask-ai-btn').disabled = false; // Enable Ask AI button
+
+                window.addMessage("You are now connected to the chat. Feel free to ask a question!", 'received');
 
                 // Set up real-time listener for chat messages for this visitor
                 setupChatListener(window.currentUserId);
@@ -59,33 +66,39 @@
                 return;
             }
             const messagesCollectionRef = collection(window.db, `artifacts/${window.__app_id}/public/data/chatMessages`);
-            // Query for messages belonging to this visitor's conversation, ordered by timestamp
-            // Filter on client-side as Firestore query for `where('conversationId', '==', visitorId)`
-            // and `orderBy('timestamp')` requires an index, which is often a pain point for users.
-            // By fetching all and filtering, we avoid index issues for this demo.
             const q = query(messagesCollectionRef, orderBy("timestamp", "asc"));
 
             onSnapshot(q, (snapshot) => {
-                // Clear and re-render only if the current visitor's messages change
-                const relevantDocs = snapshot.docs.filter(doc => doc.data().conversationId === visitorId);
                 const chatMessagesDisplay = document.getElementById('chat-messages');
-                chatMessagesDisplay.innerHTML = ''; // Clear to re-render all for this user
-                relevantDocs.forEach(doc => window.addMessage(doc.data().message, doc.data().senderType));
+                // Temporarily store messages to prevent flickering while filtering
+                let messagesToDisplay = [];
+                snapshot.docChanges().forEach((change) => {
+                    const messageData = change.doc.data();
+                    if (messageData.conversationId === visitorId) {
+                         // Add all relevant messages (past and new) to the array
+                        messagesToDisplay.push(messageData);
+                    }
+                });
+                
+                // Clear and re-render only the relevant messages
+                chatMessagesDisplay.innerHTML = ''; 
+                messagesToDisplay.sort((a, b) => (a.timestamp && b.timestamp) ? a.timestamp.toMillis() - b.timestamp.toMillis() : 0); // Ensure correct order
+                messagesToDisplay.forEach(msg => window.addMessage(msg.message, msg.senderType));
                 chatMessagesDisplay.scrollTop = chatMessagesDisplay.scrollHeight;
 
-                // Also update conversation metadata for new messages (e.g., last message for operator panel)
+                // Update conversation metadata for the operator panel
                 snapshot.docChanges().forEach(async (change) => {
                     if (change.type === "added") {
                         const messageData = change.doc.data();
                         if (messageData.conversationId === visitorId) {
-                            const convRef = doc(window.db, `artifacts/${window.__app_id}/public/data/conversationMetadata`, visitorId);
-                            await addDoc(collection(window.db, `artifacts/${window.__app_id}/public/data/conversationMetadata`), {
+                            const convMetadataRef = doc(window.db, `artifacts/${window.__app_id}/public/data/conversationMetadata`, visitorId);
+                            await setDoc(convMetadataRef, { // <--- Corrected to setDoc to update existing doc
                                 lastMessage: messageData.message,
                                 lastMessageTimestamp: messageData.timestamp,
-                                unreadCount: 0, // Reset for current user
+                                // unreadCount is managed by operator.html, no direct change here
                                 lastSenderType: messageData.senderType,
-                                // conversationId (doc.id) is set by Firestore using addDoc, no need to pass it here
-                            });
+                                lastMessageUser: messageData.userId, // Store who sent the last message
+                            }, { merge: true }); // Merge ensures other fields are not overwritten
                         }
                     }
                 });
@@ -106,27 +119,25 @@
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
         };
 
+        // NEW: Function to call Gemini API via Node.js backend
         window.callGeminiAPI = async function(userPrompt) {
-            window.addMessage("Kishor is thinking...", 'ai');
+            window.addMessage("Kishor is thinking...", 'ai'); // Display loading message
 
-            const context = `You are a helpful AI assistant representing Kishor Sankaran. Kishor is a Document Management Expert with over 12 years of experience, currently in Doha, Qatar. He specializes in optimizing information systems, Aconex, MS Excel, computer databases, and client-specific platforms like PDLM, FCTS, APMS. He has worked on projects like Doha South Rehabilitation, Al Kheesa North & East Roads, Mall of Qatar Infrastructure, Al Rayyan/Al Bustan/Khalifa Street Upgrade, Zone 46 Main Road Development, and Qatar National Convention Centre. His hobbies include reading, quest for knowledge, cooking, drawing, photography, and listening to music. He holds a Bachelor's Degree in Philosophy and a Certificate on Aconex Getting Started. When answering, base your response on the provided information about Kishor and keep it concise and professional. If a question is outside Kishor's professional details or general knowledge, politely state that you are an AI assistant and cannot assist with that specific query.`;
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: `${context}\n\nUser query: ${userPrompt}` }] });
-
-            const payload = { contents: chatHistory };
-            const apiKey = "AIzaSyCCQyoSf5hRnn6udgecoXuiYpvAzo3_qkM"; // Your API Key
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const payload = {
+                userPrompt: userPrompt,
+                context: `You are a helpful AI assistant representing Kishor Sankaran. Kishor is a Document Management Expert with over 12 years of experience, currently in Doha, Qatar. He specializes in optimizing information systems, Aconex, MS Excel, computer databases, and client-specific platforms like PDLM, FCTS, and APMS. He has worked on projects like Doha South Rehabilitation, Al Kheesa North & East Roads, Mall of Qatar Infrastructure, Al Rayyan/Al Bustan/Khalifa Street Upgrade, Zone 46 Main Road Development, and Qatar National Convention Centre. His hobbies include reading, quest for knowledge, cooking, drawing, photography, and listening to music. He holds a Bachelor's Degree in Philosophy and a Certificate on Aconex Getting Started. When answering, base your response on the provided information about Kishor and keep it concise and professional. If a question is outside Kishor's professional details or general knowledge, politely state that you are an AI assistant and cannot assist with that specific query.`,
+                conversationId: window.currentUserId, // Pass conversationId to backend
+                appId: window.__app_id // Pass app ID to backend
+            };
 
             try {
-                const response = await fetch(apiUrl, {
+                const response = await fetch('http://localhost:3000/gemini-chat', { // Call your Node.js backend
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                const result = await response.json();
+                const result = await response.json(); // Backend sends back the AI's response
 
                 // Remove loading message
                 const chatMessages = document.getElementById('chat-messages');
@@ -134,32 +145,21 @@
                      chatMessages.removeChild(chatMessages.lastChild);
                 }
 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    // Add AI response to Firestore
-                    await addDoc(collection(window.db, `artifacts/${window.__app_id}/public/data/chatMessages`), {
-                        conversationId: window.currentUserId,
-                        userId: "AI_BOT", // Explicitly mark sender as AI
-                        message: text,
-                        timestamp: window.serverTimestamp(), // Use globally exposed serverTimestamp
-                        senderType: 'ai'
-                    });
+                if (result.success) {
+                    // The backend is responsible for adding the AI message to Firestore
+                    // The onSnapshot listener in setupChatListener will display it automatically
                 } else {
-                    window.addMessage("Sorry, I couldn't generate an AI response at this time. Please try again.", 'ai');
-                    if (result.error) {
-                        console.error('Gemini API Error details:', result.error);
-                    }
+                    window.addMessage(`AI Error: ${result.error || "Could not get AI response."}`, 'ai');
+                    console.error('AI Response Error from Backend:', result.error);
                 }
             } catch (error) {
-                console.error("Error calling Gemini API:", error);
+                console.error("Error connecting to backend for Gemini API:", error);
                 // Remove loading message
                 const chatMessages = document.getElementById('chat-messages');
                 if (chatMessages.lastChild && chatMessages.lastChild.textContent === "Kishor is thinking...") {
                      chatMessages.removeChild(chatMessages.lastChild);
                 }
-                window.addMessage("There was an error connecting to the AI. Please try again later.", 'ai');
+                window.addMessage("There was an error connecting to the AI service. Please try again later.", 'ai');
             }
         };
 
@@ -828,7 +828,7 @@
         #ask-ai-btn:hover {
             background-color: #5a6268;
         }
-    </style> 
+    </style>
 </head>
 <body>
     <div id="cover-page">
@@ -982,7 +982,7 @@
                     <p>Contractor: Baytur Construction & Contracting Company</p>
                     <p>Client: Qatar Petroleum</p>
                     <p>Project Management: ASTAD and KEO International</p>
-                 fungicide>
+                </div>
             </div>
         </div>
 
@@ -1080,9 +1080,9 @@
         <div id="chat-messages">
             <!-- Messages will appear here -->
         </div>
-        <input type="text" id="chat-input" placeholder="Type your message...">
-        <button id="chat-send-btn">Send</button>
-        <button id="ask-ai-btn">Ask AI</button> <!-- New button for explicit AI interaction -->
+        <input type="text" id="chat-input" placeholder="Type your message..." disabled>
+        <button id="chat-send-btn" disabled>Send</button>
+        <button id="ask-ai-btn" disabled>Ask AI</button> <!-- New button for explicit AI interaction -->
     </div>
     <!-- End Real-time Chat Box HTML -->
 
