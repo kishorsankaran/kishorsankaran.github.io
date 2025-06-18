@@ -201,6 +201,7 @@
         .work-experience-box p,
         .skills-box p {
             margin: 5px 0; /* Adjusted margin for better readability */
+            font-weight: normal; /* Ensure normal font weight for skill box paragraphs */
         }
 
         .skills-content {
@@ -209,10 +210,7 @@
             gap: 20px;
         }
 
-        .skills-box strong {
-            text-align: center;
-            display: block; /* Make strong a block element to center its text */
-        }
+        /* Removed .skills-box strong { text-align: center; display: block; } as strong tags are being removed */
 
         .skills-box ul {
             list-style-type: disc;
@@ -347,10 +345,10 @@
             text-align: center; /* Center the heading and items */
         }
 
+        /* Removed specific font-size and font-weight for h2 within #recommendations */
         #recommendations h2 {
             color: #333;
             margin-bottom: 40px; /* Space below the heading */
-            font-size: 2.5em;
         }
 
         .recommendation-item {
@@ -420,8 +418,8 @@
         .linkedin-logo {
             width: 20px; /* Adjust size as needed */
             height: 20px; /* Adjust size as needed */
-            margin-right: 8px; /* Space between logo and text */
-            vertical-align: middle; /* Align with text */
+            margin-right: 10px;
+            filter: brightness(0) invert(1); /* Makes the LinkedIn logo white */
         }
 
 
@@ -445,6 +443,70 @@
             50% { transform: scale(1.05); opacity: 0.8; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        /* NEW: LinkedIn Post Section */
+        #latest-linkedin-post {
+            padding: 30px 20px;
+            margin: 50px auto;
+            max-width: 700px; /* Adjust as needed */
+            background-color: #f9f9f9; /* Light background */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #latest-linkedin-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #latest-linkedin-post h3 {
+            font-size: 1.8em;
+            color: #3C3E40;
+            margin-bottom: 20px;
+            background: none; /* Override default h3 style */
+            border: none;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        #latest-linkedin-post .post-content {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: left; /* Keep the content left-aligned */
+            font-weight: normal; /* Ensure normal font weight for the LinkedIn post description */
+        }
+
+        #latest-linkedin-post .linkedin-cta {
+            display: inline-flex; /* Use flexbox for icon and text */
+            align-items: center; /* Vertically align items */
+            padding: 10px 20px;
+            background-color: #0077B5; /* LinkedIn blue */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        #latest-linkedin-post .linkedin-cta:hover {
+            background-color: #005f93;
+            transform: translateY(-2px);
+        }
+
+        #latest-linkedin-post .linkedin-cta img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            filter: brightness(0) invert(1); /* Makes the LinkedIn logo white */
+        }
+
+        /* Academic Qualifications heading - ensure normal font weight */
+        /* Removed #qualification { font-weight: normal; } */
 
         /* Media Queries for Responsiveness (kept as is) */
         @media (min-width: 1024px) {
@@ -519,6 +581,7 @@
             <a href="#downloads-section">Go to Downloads</a>
             <a href="#recommendations">Professional Praise</a>
             <a href="#blogs">Blogs</a>
+            <a href="#latest-linkedin-post">LinkedIn Presence</a> <!-- Changed nav link text -->
             <a href="#contact">Contact</a>
         </div>
 
@@ -563,7 +626,7 @@
             <h3 id="skills" class="section-heading">Skills</h3>
             <div class="section-content skills-content">
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
-                    <p><strong>MS Excel</strong></p>
+                    <p>MS Excel</p> <!-- Removed strong tag -->
                     <ul>
                         <li>Designed and implemented complex task automation solutions using VBA Macros and Power Query, reducing manual data processing time by an estimated X%.</li>
                         <li>Developed dynamic reports and dashboards with Pivot Tables and Slicers for efficient data analysis and stakeholder reporting.</li>
@@ -573,7 +636,7 @@
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
-                    <p><strong>Aconex</strong></p>
+                    <p>Aconex</p> <!-- Removed strong tag -->
                     <ul>
                         <li>Expertly managed end-to-end document lifecycles on Aconex, including RFI, Submittal, and Transmittal processes, ensuring project compliance.</li>
                         <li>Developed and optimized complex workflow configurations and process maps to streamline document review and approval cycles.</li>
@@ -583,7 +646,7 @@
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
-                    <p><strong>Computer Database</strong></p>
+                    <p>Computer Database</p> <!-- Removed strong tag -->
                     <ul>
                         <li>Designed and maintained robust digital filing systems and comprehensive computer databases for rapid document retrieval and archiving.</li>
                         <li>Implemented logical indexing and metadata tagging strategies to enhance searchability and classification of vast document repositories.</li>
@@ -592,7 +655,7 @@
                     </ul>
                 </div>
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
-                    <p><strong>Client-Specific Platforms & Document Control Standards</strong></p>
+                    <p>Client-Specific Platforms & Document Control Standards</p> <!-- Removed strong tag -->
                     <ul>
                         <li>Extensively worked with client-specific platforms such as PDLM, FCTS, and APMS to manage document workflows and ensure compliance with project protocols.</li>
                         <li>Maintained accurate document registers and audit trails in alignment with client submission formats, coding structures, and metadata requirements.</li>
@@ -662,45 +725,45 @@
             <h3 id="hobbies-interests" class="section-heading">Hobbies and Interests</h3>
             <div class="section-content skills-content">
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
-                    <p><strong>Reading</strong></p>
+                    <p>Reading</p> <!-- Removed strong tag -->
                     <p>Reading opens up infinite worlds, allowing me to explore diverse thoughts, cultures, and emotions. Each book becomes a portal that broadens my perspective and sparks my imagination.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
-                    <p><strong>Quest for Knowledge</strong></p>
+                    <p>Quest for Knowledge</p> <!-- Removed strong tag -->
                     <p>Driven by curiosity, I continuously seek to learn and grow. I embrace new ideas and experiences as opportunities to expand my understanding and evolve both personally and professionally.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
-                    <p><strong>Cooking</strong></p>
+                    <p>Cooking</p> <!-- Removed strong tag -->
                     <p>Cooking is a joyful and therapeutic activity for me. It helps lift my mood, reduces stress, and allows me to express creativity through flavors and presentation.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
-                    <p><strong>Drawing</strong></p>
+                    <p>Drawing</p> <!-- Removed strong tag -->
                     <p>Drawing is a form of self-expression and reflection. It allows me to explore my thoughts visually, bringing a sense of calm, clarity, and confidence.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="600">
-                    <p><strong>Photography</strong></p>
+                    <p>Photography</p> <!-- Removed strong tag and corrected closing p tag -->
                     <p>Photography is more than capturing moments—it's about telling stories, observing details, and honing technical skills. It encourages creativity, patience, and collaboration. Feel free to explore my Instagram to see some of my work.</p>
                 </div>
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="700">
-                    <p><strong>Listening to Music</strong></p>
+                    <p>Listening to Music</p> <!-- Removed strong tag and corrected closing p tag -->
                     <p>Music is my constant companion—whether it’s the timeless classics of the 60s, 70s, and 80s or the latest chart-toppers. I enjoy a diverse range of genres and languages, from Hindi, English, and Malayalam to Tamil. Music lifts my spirits, stirs memories, and enhances every mood and moment.</p>
                 </div>
 
             </div>
         </div>
 
-        <h3 id="qualification" data-aos="fade-up">Academic Qualifications & Achievements</h3>
-        <p data-aos="fade-up" data-aos-delay="100"><strong>Qualification:</strong> Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
-        <p data-aos="fade-up" data-aos-delay="200"><strong>Qualification:</strong> Pre-Degree in Philosophy from Sree Sankaracharya University</p>
-        <p data-aos="fade-up" data-aos-delay="300"><strong>Achievements:</strong> Certificate on Aconex Getting Started from CRCC</p>
-        <p data-aos="fade-up" data-aos-delay="400"><strong>Achievements:</strong> Achieved 3rd Rank in Degree Final Exams</p>
+        <h3 id="qualification" data-aos="fade-up" class="section-heading">Academic Qualifications & Achievements</h3> <!-- Added class="section-heading" -->
+        <p data-aos="fade-up" data-aos-delay="100">Qualification: Bachelor's Degree in Philosophy from Sree Sankaracharya University</p> <!-- Removed strong tag -->
+        <p data-aos="fade-up" data-aos-delay="200">Qualification: Pre-Degree in Philosophy from Sree Sankaracharya University</p> <!-- Removed strong tag -->
+        <p data-aos="fade-up" data-aos-delay="300">Achievements: Certificate on Aconex Getting Started from CRCC</p> <!-- Removed strong tag -->
+        <p data-aos="fade-up" data-aos-delay="400">Achievements: Achieved 3rd Rank in Degree Final Exams</p> <!-- Removed strong tag -->
 
         <section id="downloads-section" data-aos="zoom-in">
-            <h2>Downloads</h2>
+            <h3 class="section-heading">Downloads</h3> <!-- Changed h2 to h3 and added class="section-heading" -->
             <div class="download-buttons">
                 <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
                     Download Resume
@@ -712,7 +775,7 @@
         </section>
 
         <section id="recommendations" data-aos="fade-up">
-            <h2>Professional Praise</h2>
+            <h3 class="section-heading">Professional Praise</h3> <!-- Changed h2 to h3 and added class="section-heading" -->
 
             <div class="recommendation-item" data-aos="fade-up" data-aos-delay="100">
                 <div class="recommender-info">
@@ -729,12 +792,25 @@
             </div>
         </section>
 
-        <h3 id="blogs" data-aos="fade-up">Blogs</h3>
+        <h3 id="blogs" data-aos="fade-up" class="section-heading">Blogs</h3> <!-- Added class="section-heading" -->
         <div style="text-align: center; margin-top: 20px;" data-aos="fade-up" data-aos-delay="100">
             <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">
                 Visit Blog <span class="new-blog-tag">New</span>
             </a>
         </div>
+
+        <!-- NEW: Latest LinkedIn Post Section -->
+        <section id="latest-linkedin-post" data-aos="fade-up" data-aos-delay="200">
+            <h3>My LinkedIn Presence</h3> <!-- Changed heading -->
+            <div class="post-content">
+                <p>I have just completed designing a multi-tabbed Document Control Web Application developed for use in construction projects. This is a work in progress. Visit my profile to learn more!</p> <!-- Updated content and font-weight handled by CSS -->
+            </div>
+            <a href="https://www.linkedin.com/posts/kishor-sankaran-30649612b_webapp-constructiontech-documentcontrol-activity-7339899547017445376-ujzW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_t4zYBvsAmYF6cx3BNchhULEbvxNSjfKc" target="_blank" class="linkedin-cta">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/480px-LinkedIn_logo_initials.png" alt="LinkedIn Icon">
+                Visit My LinkedIn Profile
+            </a>
+        </section>
+        <!-- End of NEW LinkedIn Post Section -->
 
         <div class="contact-section" id="contact" data-aos="fade-up">
             <p>Contact me:</p>
@@ -742,7 +818,8 @@
             <p>Visit my LinkedIn Profile @ <a href="https://www.linkedin.com/in/kishor-sankaran-30649612b">https://www.linkedin.com/in/kishor-sankaran-30649612b</a></p>
             <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
         </div>
-    </div> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
