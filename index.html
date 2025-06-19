@@ -187,9 +187,11 @@
             flex-grow: 1; /* Allow boxes to grow */
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
+            cursor: pointer; /* Added cursor pointer to indicate clickability */
         }
 
         /* NEW: Style for the link wrapping the work experience box */
+        /* This class will be removed from the HTML, but keeping the styles here in case the user wants to revert to external files */
         .work-experience-box-link {
             text-decoration: none; /* Remove underline from the link */
             color: inherit; /* Inherit text color */
@@ -574,6 +576,70 @@
                 margin: 10px auto;
             }
         }
+
+        /* Styles for the dynamically displayed detail sections */
+        .work-detail-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+            position: relative; /* For AOS animations */
+            z-index: 50; /* Ensure it appears above other elements if necessary */
+        }
+        .work-detail-container h1 {
+            color: #3C3E40;
+            background-color: #A8D0C2;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .work-detail-container h2 {
+            color: #3C3E40;
+            font-size: 1.8em;
+            margin-top: 30px;
+            border-bottom: 2px solid #A8D0C2;
+            padding-bottom: 10px;
+        }
+        .work-detail-container ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        .work-detail-container li {
+            margin-bottom: 10px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer; /* Indicate clickability */
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments for the detail pages */
+        @media (max-width: 767px) {
+            .work-detail-container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+            .work-detail-container h1 {
+                font-size: 1.5em;
+            }
+            .work-detail-container h2 {
+                font-size: 1.3em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -625,84 +691,68 @@
             <h3 id="work-experience">Work Experience</h3>
             <div class="section-content skills-content">
                 <!-- VA Tech Wabag Ltd -->
-                <a href="va-tech-wabag-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="200">
-                    <div class="work-experience-box">
-                        <p>2023-Present</p>
-                        <p>Handover Document Controller</p>
-                        <p>VA Tech Wabag Ltd</p>
-                        <p>Doha, Qatar</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="200" onclick="showWorkExperienceDetail('va-tech-wabag')">
+                    <p>2023-Present</p>
+                    <p>Handover Document Controller</p>
+                    <p>VA Tech Wabag Ltd</p>
+                    <p>Doha, Qatar</p>
+                </div>
 
                 <!-- KEO International Consultants -->
-                <a href="KEO%20Details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="300">
-                    <div class="work-experience-box">
-                        <p>2023</p>
-                        <p>Document Controller</p>
-                        <p>KEO International Consultants</p>
-                        <p>Doha, Qatar</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="300" onclick="showWorkExperienceDetail('keo-international')">
+                    <p>2023</p>
+                    <p>Document Controller</p>
+                    <p>KEO International Consultants</p>
+                    <p>Doha, Qatar</p>
+                </div>
 
                 <!-- China Railway Construction Corporation -->
-                <a href="china-railway-construction-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="400">
-                    <div class="work-experience-box">
-                        <p>2023</p>
-                        <p>Document Controller</p>
-                        <p>China Railway Construction Coporation</p>
-                        <p>Doha, Qatar</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="400" onclick="showWorkExperienceDetail('china-railway-construction')">
+                    <p>2023</p>
+                    <p>Document Controller</p>
+                    <p>China Railway Construction Coporation</p>
+                    <p>Doha, Qatar</p>
+                </div>
 
                 <!-- Continental Mercantile Corporation -->
-                <a href="CMC-Details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="500">
-                    <div class="work-experience-box">
-                        <p>2021-2022</p>
-                        <p>Document Controller</p>
-                        <p>Continental Mercantile Coporation</p>
-                        <p>Cochin, India</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="500" onclick="showWorkExperienceDetail('continental-mercantile')">
+                    <p>2021-2022</p>
+                    <p>Document Controller</p>
+                    <p>Continental Mercantile Coporation</p>
+                    <p>Cochin, India</p>
+                </div>
 
                 <!-- QBS International WLL -->
-                <a href="QBS.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="600">
-                    <div class="work-experience-box">
-                        <p>2012-2020</p>
-                        <p>Document Controller</p>
-                        <p>QBS International WLL</p>
-                        <p>Doha, Qatar</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="600" onclick="showWorkExperienceDetail('qbs-international')">
+                    <p>2012-2020</p>
+                    <p>Document Controller</p>
+                    <p>QBS International WLL</p>
+                    <p>Doha, Qatar</p>
+                </div>
 
                 <!-- Baytur Construction & Contracting Company -->
-                <a href="Baytur.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="700">
-                    <div class="work-experience-box">
-                        <p>2008-2012</p>
-                        <p>Document Controller</p>
-                        <p>Baytur Construction & Contracting Comapany</p>
-                        <p>Doha, Qatar</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="700" onclick="showWorkExperienceDetail('baytur-construction')">
+                    <p>2008-2012</p>
+                    <p>Document Controller</p>
+                    <p>Baytur Construction & Contracting Comapany</p>
+                    <p>Doha, Qatar</p>
+                </div>
 
                 <!-- Kamlesh Plastics -->
-                <a href="Kamlesh-Plastics.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="800">
-                    <div class="work-experience-box">
-                        <p>2004-2008</p>
-                        <p>Administrative Executive</p>
-                        <p>Kamlesh Plastics</p>
-                        <p>Mumbai, India</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="800" onclick="showWorkExperienceDetail('kamlesh-plastics')">
+                    <p>2004-2008</p>
+                    <p>Administrative Executive</p>
+                    <p>Kamlesh Plastics</p>
+                    <p>Mumbai, India</p>
+                </div>
 
                 <!-- A&B Toolers -->
-                <a href="A&B%20Toolers.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="900">
-                    <div class="work-experience-box">
-                        <p>2002-2003</p>
-                        <p>Administrative Executive</p>
-                        <p>A&B Toolers</p>
-                        <p>Cochin, India</p>
-                    </div>
-                </a>
+                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="900" onclick="showWorkExperienceDetail('ab-toolers')">
+                    <p>2002-2003</p>
+                    <p>Administrative Executive</p>
+                    <p>A&B Toolers</p>
+                    <p>Cochin, India</p>
+                </div>
             </div>
         </div>
 
@@ -903,6 +953,148 @@
             <p>Follow me on Instagram @ <a href="https://instagram.com/kishor_sankaran?igshid=OGQ5ZDc2ODk2ZA==">Kishor Sankaran</a></p>
         </div>
     </div>
+
+    <!-- START: Work Experience Detail Sections (These were previously separate HTML files) -->
+
+    <!-- VA Tech Wabag Ltd Detail -->
+    <div id="va-tech-wabag-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>VA Tech Wabag Ltd - Handover Document Controller</h1>
+        <p><strong>Dates:</strong> 2023 - Present</p>
+        <p><strong>Location:</strong> Doha, Qatar</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Managed and streamlined the handover documentation process for large-scale water and wastewater projects, ensuring compliance with client specifications and regulatory requirements.</li>
+            <li>Developed and implemented a robust system for tracking, reviewing, and approving final project documentation, leading to a X% reduction in handover delays.</li>
+            <li>Collaborated closely with engineering, construction, and commissioning teams to compile comprehensive O&M manuals, as-built drawings, and final certificates.</li>
+            <li>Utilized advanced document management software (e.g., Aconex, client-specific platforms) to maintain accurate document registers and audit trails.</li>
+            <li>Provided training and support to project staff on document control procedures and the use of the handover documentation system.</li>
+            <li>Successfully coordinated with various stakeholders, including clients, consultants, and subcontractors, to ensure timely submission and acceptance of all handover deliverables.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- KEO International Consultants Detail -->
+    <div id="keo-international-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>KEO International Consultants - Document Controller</h1>
+        <p><strong>Dates:</strong> 2023</p>
+        <p><strong>Location:</strong> Doha, Qatar</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Managed document control for various projects, ensuring adherence to company and client standards.</li>
+            <li>Maintained up-to-date document registers and provided timely access to project documentation for teams.</li>
+            <li>Assisted in the preparation and submission of project deliverables, including reports, drawings, and correspondence.</li>
+            <li>Ensured proper version control and archiving of all project-related documents.</li>
+            <li>Facilitated efficient communication and information flow between project teams and external stakeholders.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- China Railway Construction Corporation Detail -->
+    <div id="china-railway-construction-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>China Railway Construction Corporation - Document Controller</h1>
+        <p><strong>Dates:</strong> 2023</p>
+        <p><strong>Location:</strong> Doha, Qatar</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Implemented and maintained document control systems for large-scale infrastructure projects.</li>
+            <li>Managed the lifecycle of project documents from initiation to archiving, ensuring accuracy and accessibility.</li>
+            <li>Coordinated with various departments to standardize document submission and retrieval processes.</li>
+            <li>Conducted regular audits to ensure compliance with document control procedures and project requirements.</li>
+            <li>Provided support and training to staff on document management best practices and system usage.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- Continental Mercantile Corporation Detail -->
+    <div id="continental-mercantile-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>Continental Mercantile Corporation - Document Controller</h1>
+        <p><strong>Dates:</strong> 2021-2022</p>
+        <p><strong>Location:</strong> Cochin, India</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Managed incoming and outgoing project documentation, ensuring proper logging and distribution.</li>
+            <li>Maintained comprehensive document registers and controlled access permissions.</li>
+            <li>Supported project teams in document retrieval and organization.</li>
+            <li>Ensured adherence to project-specific document control procedures.</li>
+            <li>Assisted in the preparation of project reports and presentations.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- QBS International WLL Detail -->
+    <div id="qbs-international-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>QBS International WLL - Document Controller</h1>
+        <p><strong>Dates:</strong> 2012-2020</p>
+        <p><strong>Location:</strong> Doha, Qatar</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Managed the full lifecycle of project documents, including processing, distribution, and archiving.</li>
+            <li>Implemented and maintained document control systems to ensure efficient information flow.</li>
+            <li>Ensured compliance with client-specific document management requirements and project standards.</li>
+            <li>Trained new team members on document control procedures and system usage.</li>
+            <li>Prepared and submitted various document control reports for project management.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- Baytur Construction & Contracting Company Detail -->
+    <div id="baytur-construction-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>Baytur Construction & Contracting Company - Document Controller</h1>
+        <p><strong>Dates:</strong> 2008-2012</p>
+        <p><strong>Location:</strong> Doha, Qatar</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Responsible for all aspects of document control for large construction projects.</li>
+            <li>Managed the receipt, registration, distribution, and archiving of project documents.</li>
+            <li>Ensured strict adherence to document control procedures and quality standards.</li>
+            <li>Liaised with project managers, engineers, and external parties regarding documentation.</li>
+            <li>Maintained accurate and up-to-date document tracking systems.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- Kamlesh Plastics Detail -->
+    <div id="kamlesh-plastics-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>Kamlesh Plastics - Administrative Executive</h1>
+        <p><strong>Dates:</strong> 2004-2008</p>
+        <p><strong>Location:</strong> Mumbai, India</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Managed general administrative tasks, including record keeping and office organization.</li>
+            <li>Handled correspondence, scheduling, and office supplies management.</li>
+            <li>Supported management in various day-to-day operational activities.</li>
+            <li>Ensured efficient office procedures and a smooth working environment.</li>
+            <li>Assisted with data entry and basic reporting.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- A&B Toolers Detail -->
+    <div id="ab-toolers-detail" class="work-detail-container" data-aos="fade-up">
+        <h1>A&B Toolers - Administrative Executive</h1>
+        <p><strong>Dates:</strong> 2002-2003</p>
+        <p><strong>Location:</strong> Cochin, India</p>
+
+        <h2>Responsibilities & Achievements:</h2>
+        <ul>
+            <li>Provided administrative support to the team, including document management and filing.</li>
+            <li>Managed incoming and outgoing communications.</li>
+            <li>Organized and maintained office records and databases.</li>
+            <li>Assisted in various operational tasks as required.</li>
+            <li>Contributed to maintaining an organized and efficient office environment.</li>
+        </ul>
+        <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
+    </div>
+
+    <!-- END: Work Experience Detail Sections -->
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
@@ -916,6 +1108,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             const coverPage = document.getElementById('cover-page');
             const mainContent = document.getElementById('main-content');
+            const detailContainers = document.querySelectorAll('.work-detail-container'); // All detail sections
 
             // Function to show main content and hide cover
             function enterWebsite() {
@@ -927,23 +1120,59 @@
                 }, 1000); // Wait for the transition to finish
             }
 
+            // Function to show a specific work experience detail
+            window.showWorkExperienceDetail = function(companyId) {
+                mainContent.style.display = 'none'; // Hide main content
+                detailContainers.forEach(container => {
+                    container.style.display = 'none'; // Hide all detail containers first
+                });
+
+                const targetDetail = document.getElementById(companyId + '-detail');
+                if (targetDetail) {
+                    targetDetail.style.display = 'block'; // Show the specific detail container
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top of the detail page
+                    AOS.refresh(); // Refresh AOS for animations on the new content
+                }
+            };
+
+            // Function to hide all work experience details and show main content, then scroll to #work-experience
+            window.hideWorkExperienceDetail = function() {
+                detailContainers.forEach(container => {
+                    container.style.display = 'none'; // Hide all detail containers
+                });
+                mainContent.style.display = 'block'; // Show main content
+
+                // Scroll back to the "Work Experience" section
+                const workExperienceSection = document.getElementById('work-experience');
+                if (workExperienceSection) {
+                    const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
+                    const targetOffset = workExperienceSection.getBoundingClientRect().top + window.scrollY;
+                    const yOffset = targetOffset - headerHeight - 10;
+                    window.scrollTo({
+                        top: yOffset,
+                        behavior: "smooth"
+                    });
+                }
+                AOS.refresh(); // Refresh AOS for animations on the now visible main content
+            };
+
+
             // Click anywhere on the cover page to enter
             coverPage.addEventListener('click', enterWebsite);
 
             // Add smooth scrolling behavior for push buttons (your existing code)
-            const buttons = document.querySelectorAll(".main-heading-buttons a");
-            buttons.forEach(button => {
+            const navButtons = document.querySelectorAll(".main-heading-buttons a");
+            navButtons.forEach(button => {
                 button.addEventListener("click", function(event) {
-                    // Check if the click is on a link that is part of the main navigation and not a work-experience-box-link
+                    // Only apply smooth scroll to internal anchors (# sections)
                     const targetId = button.getAttribute("href");
-                    if (targetId && targetId.startsWith("#")) { // Only apply smooth scroll to internal anchors
+                    if (targetId && targetId.startsWith("#")) {
                         event.preventDefault(); // Prevent default link behavior for smooth scroll
                         const targetElement = document.querySelector(targetId);
                         if (targetElement) {
-                            // Calculate offset for smooth scrolling, accounting for sticky header
                             const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
                             const targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
-                            const yOffset = targetOffset - headerHeight - 10; // Adjust 10px for a little padding
+                            const yOffset = targetOffset - headerHeight - 10;
 
                             window.scrollTo({
                                 top: yOffset,
@@ -953,7 +1182,7 @@
                     } else if (targetId === "javascript:void(0);" && button.textContent.includes("Home")) {
                         scrollToTop();
                     }
-                    // For external links (like work experience details), let the default behavior happen (open in new tab)
+                    // The work experience boxes now use onclick, so their default href behavior is not relevant here.
                 });
             });
         });
