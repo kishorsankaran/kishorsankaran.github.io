@@ -188,6 +188,21 @@
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
         }
+
+        /* NEW: Style for the link wrapping the work experience box */
+        .work-experience-box-link {
+            text-decoration: none; /* Remove underline from the link */
+            color: inherit; /* Inherit text color */
+            display: flex; /* Make the link a flex container to contain the box */
+            flex-grow: 1; /* Allow link to grow within its container */
+            flex-shrink: 1; /* Allow link to shrink */
+            min-width: 280px; /* Ensure link behaves like the box it contains */
+        }
+
+        .work-experience-box-link .work-experience-box {
+            width: 100%; /* Ensure the box fills the link's width */
+        }
+
         /* NEW: Left-align text within skills-box for project details */
         .skills-box.project-details-content p {
             text-align: left;
@@ -209,8 +224,6 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-
-        /* Removed .skills-box strong { text-align: center; display: block; } as strong tags are being removed */
 
         .skills-box ul {
             list-style-type: disc;
@@ -581,7 +594,7 @@
             <a href="#downloads-section">Go to Downloads</a>
             <a href="#recommendations">Professional Praise</a>
             <a href="#blogs">Blogs</a>
-            <a href="#latest-linkedin-post">LinkedIn Presence</a> <!-- Changed nav link text -->
+            <a href="#latest-linkedin-post">LinkedIn Presence</a>
             <a href="#contact">Contact</a>
         </div>
 
@@ -611,14 +624,85 @@
         <div class="section-box" data-aos="fade-up" data-aos-delay="100">
             <h3 id="work-experience">Work Experience</h3>
             <div class="section-content skills-content">
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="200"><p>2023-Present</p><p>Handover Document Controller</p><p>VA Tech Wabag Ltd</p><p>Doha, Qatar</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="300"><p>2023</p><p>Document Controller</p><p>KEO International Consultants</p><p>Doha, Qatar</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="400"><p>2023</p><p>Document Controller</p><p>China Railway Construction Coporation</p><p>Doha, Qatar</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="500"><p>2021-2022</p><p>Document Controller</p><p>Continental Mercantile Coporation</p><p>Cochin, India</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="600"><p>2012-2020</p><p>Document Controller</p><p>QBS International WLL</p><p>Doha, Qatar</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="700"><p>2008-2012</p><p>Document Controller</p><p>Baytur Construction & Contracting Comapany</p><p>Doha, Qatar</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="800"><p>2004-2008</p><p>Administrative Executive</p><p>Kamlesh Plastics</p><p>Mumbai, India</p></div>
-                <div class="work-experience-box" data-aos="fade-up" data-aos-delay="900"><p>2002-2003</p><p>Administrative Executive</p><p>A&B Toolers</p><p>Cochin, India</p></div>
+                <!-- VA Tech Wabag Ltd -->
+                <a href="va-tech-wabag-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="200">
+                    <div class="work-experience-box">
+                        <p>2023-Present</p>
+                        <p>Handover Document Controller</p>
+                        <p>VA Tech Wabag Ltd</p>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </a>
+
+                <!-- KEO International Consultants -->
+                <a href="KEO-Details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="300">
+                    <div class="work-experience-box">
+                        <p>2023</p>
+                        <p>Document Controller</p>
+                        <p>KEO International Consultants</p>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </a>
+
+                <!-- China Railway Construction Corporation -->
+                <a href="china-railway-construction-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="400">
+                    <div class="work-experience-box">
+                        <p>2023</p>
+                        <p>Document Controller</p>
+                        <p>China Railway Construction Coporation</p>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </a>
+
+                <!-- Continental Mercantile Corporation -->
+                <a href="CMC-Details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="500">
+                    <div class="work-experience-box">
+                        <p>2021-2022</p>
+                        <p>Document Controller</p>
+                        <p>Continental Mercantile Coporation</p>
+                        <p>Cochin, India</p>
+                    </div>
+                </a>
+
+                <!-- QBS International WLL -->
+                <a href="QBS.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="600">
+                    <div class="work-experience-box">
+                        <p>2012-2020</p>
+                        <p>Document Controller</p>
+                        <p>QBS International WLL</p>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </a>
+
+                <!-- Baytur Construction & Contracting Company -->
+                <a href="Baytur.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="700">
+                    <div class="work-experience-box">
+                        <p>2008-2012</p>
+                        <p>Document Controller</p>
+                        <p>Baytur Construction & Contracting Comapany</p>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </a>
+
+                <!-- Kamlesh Plastics -->
+                <a href="kamlesh-plastics-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="800">
+                    <div class="work-experience-box">
+                        <p>2004-2008</p>
+                        <p>Administrative Executive</p>
+                        <p>Kamlesh Plastics</p>
+                        <p>Mumbai, India</p>
+                    </div>
+                </a>
+
+                <!-- A&B Toolers -->
+                <a href="ab-toolers-details.html" target="_blank" class="work-experience-box-link" data-aos="fade-up" data-aos-delay="900">
+                    <div class="work-experience-box">
+                        <p>2002-2003</p>
+                        <p>Administrative Executive</p>
+                        <p>A&B Toolers</p>
+                        <p>Cochin, India</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -626,7 +710,7 @@
             <h3 id="skills" class="section-heading">Skills</h3>
             <div class="section-content skills-content">
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
-                    <p>MS Excel</p> <!-- Removed strong tag -->
+                    <p>MS Excel</p>
                     <ul>
                         <li>Designed and implemented complex task automation solutions using VBA Macros and Power Query, reducing manual data processing time by an estimated X%.</li>
                         <li>Developed dynamic reports and dashboards with Pivot Tables and Slicers for efficient data analysis and stakeholder reporting.</li>
@@ -636,7 +720,7 @@
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
-                    <p>Aconex</p> <!-- Removed strong tag -->
+                    <p>Aconex</p>
                     <ul>
                         <li>Expertly managed end-to-end document lifecycles on Aconex, including RFI, Submittal, and Transmittal processes, ensuring project compliance.</li>
                         <li>Developed and optimized complex workflow configurations and process maps to streamline document review and approval cycles.</li>
@@ -646,7 +730,7 @@
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
-                    <p>Computer Database</p> <!-- Removed strong tag -->
+                    <p>Computer Database</p>
                     <ul>
                         <li>Designed and maintained robust digital filing systems and comprehensive computer databases for rapid document retrieval and archiving.</li>
                         <li>Implemented logical indexing and metadata tagging strategies to enhance searchability and classification of vast document repositories.</li>
@@ -655,7 +739,7 @@
                     </ul>
                 </div>
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
-                    <p>Client-Specific Platforms & Document Control Standards</p> <!-- Removed strong tag -->
+                    <p>Client-Specific Platforms & Document Control Standards</p>
                     <ul>
                         <li>Extensively worked with client-specific platforms such as PDLM, FCTS, and APMS to manage document workflows and ensure compliance with project protocols.</li>
                         <li>Maintained accurate document registers and audit trails in alignment with client submission formats, coding structures, and metadata requirements.</li>
@@ -725,45 +809,45 @@
             <h3 id="hobbies-interests" class="section-heading">Hobbies and Interests</h3>
             <div class="section-content skills-content">
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="200">
-                    <p>Reading</p> <!-- Removed strong tag -->
+                    <p>Reading</p>
                     <p>Reading opens up infinite worlds, allowing me to explore diverse thoughts, cultures, and emotions. Each book becomes a portal that broadens my perspective and sparks my imagination.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
-                    <p>Quest for Knowledge</p> <!-- Removed strong tag -->
+                    <p>Quest for Knowledge</p>
                     <p>Driven by curiosity, I continuously seek to learn and grow. I embrace new ideas and experiences as opportunities to expand my understanding and evolve both personally and professionally.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
-                    <p>Cooking</p> <!-- Removed strong tag -->
+                    <p>Cooking</p>
                     <p>Cooking is a joyful and therapeutic activity for me. It helps lift my mood, reduces stress, and allows me to express creativity through flavors and presentation.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="500">
-                    <p>Drawing</p> <!-- Removed strong tag -->
+                    <p>Drawing</p>
                     <p>Drawing is a form of self-expression and reflection. It allows me to explore my thoughts visually, bringing a sense of calm, clarity, and confidence.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="600">
-                    <p>Photography</p> <!-- Removed strong tag and corrected closing p tag -->
+                    <p>Photography</p>
                     <p>Photography is more than capturing moments—it's about telling stories, observing details, and honing technical skills. It encourages creativity, patience, and collaboration. Feel free to explore my Instagram to see some of my work.</p>
                 </div>
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="700">
-                    <p>Listening to Music</p> <!-- Removed strong tag and corrected closing p tag -->
+                    <p>Listening to Music</p>
                     <p>Music is my constant companion—whether it’s the timeless classics of the 60s, 70s, and 80s or the latest chart-toppers. I enjoy a diverse range of genres and languages, from Hindi, English, and Malayalam to Tamil. Music lifts my spirits, stirs memories, and enhances every mood and moment.</p>
                 </div>
 
             </div>
         </div>
 
-        <h3 id="qualification" data-aos="fade-up" class="section-heading">Academic Qualifications & Achievements</h3> <!-- Added class="section-heading" -->
-        <p data-aos="fade-up" data-aos-delay="100">Qualification: Bachelor's Degree in Philosophy from Sree Sankaracharya University</p> <!-- Removed strong tag -->
-        <p data-aos="fade-up" data-aos-delay="200">Qualification: Pre-Degree in Philosophy from Sree Sankaracharya University</p> <!-- Removed strong tag -->
-        <p data-aos="fade-up" data-aos-delay="300">Achievements: Certificate on Aconex Getting Started from CRCC</p> <!-- Removed strong tag -->
-        <p data-aos="fade-up" data-aos-delay="400">Achievements: Achieved 3rd Rank in Degree Final Exams</p> <!-- Removed strong tag -->
+        <h3 id="qualification" data-aos="fade-up" class="section-heading">Academic Qualifications & Achievements</h3>
+        <p data-aos="fade-up" data-aos-delay="100">Qualification: Bachelor's Degree in Philosophy from Sree Sankaracharya University</p>
+        <p data-aos="fade-up" data-aos-delay="200">Qualification: Pre-Degree in Philosophy from Sree Sankaracharya University</p>
+        <p data-aos="fade-up" data-aos-delay="300">Achievements: Certificate on Aconex Getting Started from CRCC</p>
+        <p data-aos="fade-up" data-aos-delay="400">Achievements: Achieved 3rd Rank in Degree Final Exams</p>
 
         <section id="downloads-section" data-aos="zoom-in">
-            <h3 class="section-heading">Downloads</h3> <!-- Changed h2 to h3 and added class="section-heading" -->
+            <h3 class="section-heading">Downloads</h3>
             <div class="download-buttons">
                 <a href="https://raw.githubusercontent.com/kishorsankaran/kishorsankaran.github.io/main/Kishor_Sankaran_Resume.pdf" target="_blank">
                     Download Resume
@@ -775,7 +859,7 @@
         </section>
 
         <section id="recommendations" data-aos="fade-up">
-            <h3 class="section-heading">Professional Praise</h3> <!-- Changed h2 to h3 and added class="section-heading" -->
+            <h3 class="section-heading">Professional Praise</h3>
 
             <div class="recommendation-item" data-aos="fade-up" data-aos-delay="100">
                 <div class="recommender-info">
@@ -792,7 +876,7 @@
             </div>
         </section>
 
-        <h3 id="blogs" data-aos="fade-up" class="section-heading">Blogs</h3> <!-- Added class="section-heading" -->
+        <h3 id="blogs" data-aos="fade-up" class="section-heading">Blogs</h3>
         <div style="text-align: center; margin-top: 20px;" data-aos="fade-up" data-aos-delay="100">
             <a href="https://www.blogger.com/blog/posts/4981560877383655004" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #A8D0C2; color: #0F1010; text-decoration: none; border-radius: 5px; border: 1px solid #496f8e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;">
                 Visit Blog <span class="new-blog-tag">New</span>
@@ -801,9 +885,9 @@
 
         <!-- NEW: Latest LinkedIn Post Section -->
         <section id="latest-linkedin-post" data-aos="fade-up" data-aos-delay="200">
-            <h3>My LinkedIn Presence</h3> <!-- Changed heading -->
+            <h3>My LinkedIn Presence</h3>
             <div class="post-content">
-                <p>I have just completed designing a multi-tabbed Document Control Web Application developed for use in construction projects. This is a work in progress. Visit my profile to learn more!</p> <!-- Updated content and font-weight handled by CSS -->
+                <p>I have just completed designing a multi-tabbed Document Control Web Application developed for use in construction projects. This is a work in progress. Visit my profile to learn more!</p>
             </div>
             <a href="https://www.linkedin.com/posts/kishor-sankaran-30649612b_webapp-constructiontech-documentcontrol-activity-7339899547017445376-ujzW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_t4zYBvsAmYF6cx3BNchhULEbvxNSjfKc" target="_blank" class="linkedin-cta">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/480px-LinkedIn_logo_initials.png" alt="LinkedIn Icon">
@@ -850,10 +934,10 @@
             const buttons = document.querySelectorAll(".main-heading-buttons a");
             buttons.forEach(button => {
                 button.addEventListener("click", function(event) {
-                    event.preventDefault();
+                    // Check if the click is on a link that is part of the main navigation and not a work-experience-box-link
                     const targetId = button.getAttribute("href");
-                    // Ensure it's not a javascript:void(0); link
-                    if (targetId && targetId !== "javascript:void(0);") {
+                    if (targetId && targetId.startsWith("#")) { // Only apply smooth scroll to internal anchors
+                        event.preventDefault(); // Prevent default link behavior for smooth scroll
                         const targetElement = document.querySelector(targetId);
                         if (targetElement) {
                             // Calculate offset for smooth scrolling, accounting for sticky header
@@ -869,6 +953,7 @@
                     } else if (targetId === "javascript:void(0);" && button.textContent.includes("Home")) {
                         scrollToTop();
                     }
+                    // For external links (like work experience details), let the default behavior happen (open in new tab)
                 });
             });
         });
