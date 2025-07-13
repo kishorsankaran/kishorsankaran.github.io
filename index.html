@@ -640,6 +640,53 @@
                 font-size: 1.3em;
             }
         }
+
+        /* New Styles for Projects Section */
+        .project-item-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            text-align: center; /* Center the video and title */
+        }
+
+        .project-item-container h4 {
+            font-size: 1.5em;
+            color: #3C3E40;
+            margin-bottom: 15px;
+            background: none; /* Override default h4 background */
+            border: none; /* Override default h4 border */
+            padding: 0; /* Remove padding */
+            box-shadow: none; /* Remove shadow */
+        }
+
+        .video-responsive {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-bottom: 20px; /* Space below video */
+        }
+
+        .video-responsive iframe,
+        .video-responsive object,
+        .video-responsive embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-item-container p {
+            text-align: justify;
+            line-height: 1.6;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -647,7 +694,6 @@
         <h1 data-aos="zoom-in" data-aos-delay="200">Kishor Sankaran</h1>
         <p data-aos="zoom-in" data-aos-delay="400">Document Management Expert</p>
         <p class="enter-text" data-aos="fade-up" data-aos-delay="800">Explore Portfolio</p>
-        <!-- Removed "Designed by Kishor Sankaran" from Cover Page -->
     </div>
 
     <div id="main-content" style="display: none;">
@@ -661,6 +707,7 @@
             <a href="#downloads-section">Go to Downloads</a>
             <a href="#recommendations">Professional Praise</a>
             <a href="#blogs">Blogs</a>
+            <a href="#projects-section">Projects</a> <!-- New link for Projects -->
             <a href="#latest-linkedin-post">LinkedIn Presence</a>
             <a href="#contact">Contact</a>
         </div>
@@ -866,7 +913,7 @@
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="300">
                     <p>Quest for Knowledge</p>
-                    <p>Driven by curiosity, I continuously seek to learn and grow. I actively explore coding, web designing, and emerging technologies, aiming to integrate them into my professional field. I embrace new ideas and experiences as opportunities to expand my understanding and evolve both personally and professionally</p>
+                    <p>Driven by curiosity, I continuously seek to learn and grow. I embrace new ideas and experiences as opportunities to expand my understanding and evolve both personally and professionally.</p>
                 </div>
 
                 <div class="skills-box" data-aos="fade-up" data-aos-delay="400">
@@ -934,6 +981,34 @@
             </a>
         </div>
 
+        <!-- NEW: Projects Section -->
+        <section id="projects-section" class="section-box" data-aos="fade-up">
+            <h3 class="section-heading">My Projects</h3>
+
+            <div class="project-item-container" data-aos="fade-up" data-aos-delay="100">
+                <h4>Document Control Web Application Demo</h4>
+                <div class="video-responsive">
+                    <!-- Updated YouTube embed URL with your provided link -->
+                    <iframe src="https://www.youtube.com/embed/3QN3OcPmQmA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <p>This is a demonstration of a multi-tabbed Document Control Web Application designed for construction projects. It showcases features for managing various project documents, tracking workflows, and ensuring compliance. This application is currently a work in progress, aiming to streamline document management processes for large-scale construction endeavors.</p>
+            </div>
+
+            <!-- You can add more project-item-container blocks here for additional projects -->
+            <!-- Example for another project: -->
+            <!--
+            <div class="project-item-container" data-aos="fade-up" data-aos-delay="200">
+                <h4>Project Title 2</h4>
+                <div class="video-responsive">
+                    <iframe src="YOUR_YOUTUBE_EMBED_URL_HERE" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <p>Brief description of Project 2. Explain its purpose, your role, and key achievements.</p>
+            </div>
+            -->
+
+        </section>
+        <!-- End of Projects Section -->
+
         <!-- NEW: Latest LinkedIn Post Section -->
         <section id="latest-linkedin-post" data-aos="fade-up" data-aos-delay="200">
             <h3>My LinkedIn Presence</h3>
@@ -974,7 +1049,7 @@
             <li>Ensured all submissions met Ashghal's standards and guidelines.</li>
             <li>Supported and guided team members on preparing and submitting project documentation.</li>
             <li>Successfully coordinated with various stakeholders, including clients, consultants, and subcontractors, to ensure timely submission and acceptance of all handover deliverables.</li>
-            <li>Attend weekly handover meetings with clients and supervision consultants to discuss the status of close-out documentation. Prepare PowerPoint presentations and present them during the meetings, explaining key details as needed.</li>
+            <li>Attended weekly handover meetings with the client and supervision consultant to discuss close-out document status.</li>
             <li>Gathered closeout details from the team, updated the Snag List across different areas, and prepared weekly reports and an overall snag summary.</li>
         </ul>
         <button onclick="hideWorkExperienceDetail()" class="back-button">← Back to Portfolio</button>
