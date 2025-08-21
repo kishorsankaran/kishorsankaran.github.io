@@ -5,8 +5,20 @@
     <title>Kishor Sankaran - Document Management Expert</title>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome for the hamburger menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+        /* Global Cursor Setting */
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            margin: 20px;
+            background-color: #E2EBF5; /* Pearl White background */
+            color: #000000; /* Black text color */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+            cursor: default; /* Set default cursor for the entire body */
+        }
+
         /* Cover Page Styles */
         #cover-page {
             position: fixed;
@@ -22,7 +34,7 @@
             align-items: center;
             text-align: center;
             z-index: 9999; /* Ensure it's on top */
-            cursor: pointer;
+            cursor: pointer; /* Cover page is clickable to enter */
             transition: opacity 1s ease-out, visibility 1s ease-out; /* Smooth transition */
             opacity: 1;
             visibility: visible;
@@ -41,14 +53,12 @@
             border: none; /* Override existing h1 border */
             padding: 0; /* Remove padding */
             box-shadow: none; /* Remove shadow */
-            cursor: pointer;
         }
 
         #cover-page p {
             font-size: 1.5em;
             color: #5D605F; /* Slightly lighter for profession */
             margin-top: 0;
-            cursor: pointer;
         }
 
         #cover-page .enter-text {
@@ -67,14 +77,6 @@
 
 
         /* Existing Styles (from your provided code) */
-        body {
-            font-family: Calibri, Arial, sans-serif;
-            margin: 20px;
-            background-color: #E2EBF5; /* Pearl White background */
-            color: #000000; /* Black text color */
-            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
-        }
-
         h1, h2, h3, h4 {
             color: #3C3E40;
             background-color: #A8D0C2;
@@ -83,7 +85,6 @@
             border-radius: 5px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-            cursor: pointer;
         }
 
         h1:hover, h2:hover, h3:hover, h4:hover {
@@ -95,8 +96,9 @@
         h3 {
             margin-top: 30px; /* Add some space between sections */
         }
-
-        .main-heading-buttons {
+        
+        /* NEW: Mobile Navigation Styles */
+        .mobile-nav-container {
             text-align: center;
             padding: 20px 0;
             position: sticky;
@@ -106,9 +108,29 @@
             border-radius: 10px 10px 0 0;
         }
 
+        .main-heading-buttons {
+            display: none; /* Hide by default on mobile */
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .main-heading-buttons.visible {
+            display: flex;
+        }
+
+        .hamburger-menu {
+            display: block;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #3C3E40;
+            cursor: pointer;
+        }
+
         .main-heading-buttons a {
-            display: inline-block;
-            margin: 5px;
+            display: block; /* Stack buttons vertically on small screens */
+            margin: 5px auto;
             padding: 8px 16px;
             background-color: #A8D0C2;
             color: #0F1010;
@@ -117,13 +139,33 @@
             border: 1px solid #D1DAD7;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            cursor: pointer; /* Explicitly set for navigation links */
         }
-
+        
         .main-heading-buttons a:hover {
             background-color: #B7D6CB;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
+        @media (min-width: 768px) {
+            .mobile-nav-container {
+                display: flex;
+                justify-content: center;
+            }
+            .main-heading-buttons {
+                display: block; /* Show as inline block on larger screens */
+                flex-direction: row;
+            }
+            .hamburger-menu {
+                display: none; /* Hide on larger screens */
+            }
+            .main-heading-buttons a {
+                display: inline-block; /* Revert to inline for horizontal layout */
+                margin: 5px;
+            }
+        }
+
 
         .profile-summary {
             display: flex;
@@ -177,7 +219,46 @@
             text-align: justify;
         }
 
-        .work-experience-box,
+        .work-experience-box {
+            background-color: rgba(169, 169, 169, 0.2);
+            margin: 10px; /* Adjusted margin for better spacing */
+            border-radius: 10px;
+            padding: 15px; /* Increased padding */
+            box-sizing: border-box;
+            flex-grow: 1; /* Allow boxes to grow */
+            flex-shrink: 1; /* Allow boxes to shrink */
+            min-width: 280px; /* Minimum width before stacking */
+            cursor: pointer; /* Explicitly set for clickable work experience boxes */
+
+            /* Ripple Effect CSS */
+            position: relative; /* Needed for absolute positioning of ::after */
+            overflow: hidden;   /* Hides the overflowing part of the ripple */
+            z-index: 1;         /* Ensures the box content is above the ripple */
+        }
+
+        .work-experience-box::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3); /* Light ripple effect */
+            border-radius: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out, transform 0.4s ease-out;
+            z-index: 0; /* Ensures ripple is behind content but within the box */
+        }
+
+        .work-experience-box:hover::after {
+            width: 200%; /* Make it large enough to cover the box */
+            height: 200%; /* Make it large enough to cover the box */
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+
         .skills-box {
             background-color: rgba(169, 169, 169, 0.2);
             margin: 10px; /* Adjusted margin for better spacing */
@@ -187,22 +268,7 @@
             flex-grow: 1; /* Allow boxes to grow */
             flex-shrink: 1; /* Allow boxes to shrink */
             min-width: 280px; /* Minimum width before stacking */
-            cursor: pointer; /* Added cursor pointer to indicate clickability */
-        }
-
-        /* NEW: Style for the link wrapping the work experience box */
-        /* This class will be removed from the HTML, but keeping the styles here in case the user wants to revert to external files */
-        .work-experience-box-link {
-            text-decoration: none; /* Remove underline from the link */
-            color: inherit; /* Inherit text color */
-            display: flex; /* Make the link a flex container to contain the box */
-            flex-grow: 1; /* Allow link to grow within its container */
-            flex-shrink: 1; /* Allow link to shrink */
-            min-width: 280px; /* Ensure link behaves like the box it contains */
-        }
-
-        .work-experience-box-link .work-experience-box {
-            width: 100%; /* Ensure the box fills the link's width */
+            cursor: default; /* Skills boxes are not directly clickable */
         }
 
         /* NEW: Left-align text within skills-box for project details */
@@ -265,7 +331,7 @@
             border-radius: 5px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-            cursor: pointer;
+            cursor: default; /* Not directly clickable, so default cursor */
         }
 
         #blogs:hover {
@@ -290,6 +356,7 @@
             border: 1px solid #496f8e;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            cursor: pointer; /* Explicitly set for download buttons */
         }
 
         .download-buttons a:hover {
@@ -315,6 +382,7 @@
             color: #266851;
             text-decoration: none;
             padding: 10px;
+            cursor: pointer; /* Explicitly set for contact links */
         }
 
         /* Styling for the Downloads Section Box */
@@ -346,6 +414,7 @@
             transition: background-color 0.3s ease; /* Smooth hover effect */
             font-size: 1.1em; /* Slightly larger text */
             min-width: 180px; /* Ensures buttons are a consistent minimum width */
+            cursor: pointer; /* Explicitly set for download buttons */
         }
 
         #downloads-section .download-buttons a:hover {
@@ -379,6 +448,7 @@
             align-items: center; /* Center items horizontally within the box */
             text-align: center; /* Center text within the box */
             transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added for hover effect */
+            cursor: default; /* Default cursor for the box itself */
         }
 
         .recommender-info {
@@ -423,6 +493,7 @@
             display: flex; /* Use flexbox for icon and text alignment */
             align-items: center; /* Vertically align items */
             justify-content: center; /* Center content horizontally */
+            cursor: pointer; /* Explicitly set for LinkedIn link */
         }
 
         .linkedin-link:hover {
@@ -506,6 +577,7 @@
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s ease, transform 0.2s;
+            cursor: pointer; /* Explicitly set for LinkedIn CTA */
         }
 
         #latest-linkedin-post .linkedin-cta:hover {
@@ -549,8 +621,16 @@
             body {
                 margin: 10px; /* Reduced margin for small screens */
             }
+            .mobile-nav-container {
+                padding: 10px 0;
+            }
+            .main-heading-buttons {
+                flex-direction: column; /* Stack buttons vertically on small screens */
+                width: 100%;
+                margin-top: 10px;
+            }
             .main-heading-buttons a {
-                display: block; /* Stack buttons vertically on small screens */
+                display: block;
                 margin: 5px auto;
             }
             .profile-summary {
@@ -697,20 +777,27 @@
     </div>
 
     <div id="main-content" style="display: none;">
-        <div class="main-heading-buttons">
-            <a href="javascript:void(0);" onclick="scrollToTop()">Home</a>
-            <a href="#work-experience">Work Experience</a>
-            <a href="#skills">Skills</a>
-            <a href="#project-details">Project Details</a>
-            <a href="#hobbies-interests">Hobbies and Interests</a>
-            <a href="#qualification">Qualification</a>
-            <a href="#downloads-section">Go to Downloads</a>
-            <a href="#recommendations">Professional Praise</a>
-            <a href="#blogs">Blogs</a>
-            <a href="#projects-section">Projects</a> <!-- New link for Projects -->
-            <a href="#latest-linkedin-post">LinkedIn Presence</a>
-            <a href="#contact">Contact</a>
+        <div class="mobile-nav-container">
+            <!-- Hamburger menu button visible on mobile -->
+            <button class="hamburger-menu" onclick="toggleNav()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="main-heading-buttons">
+                <a href="javascript:void(0);" onclick="scrollToTop()">Home</a>
+                <a href="#work-experience">Work Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#project-details">Project Details</a>
+                <a href="#hobbies-interests">Hobbies and Interests</a>
+                <a href="#qualification">Qualification</a>
+                <a href="#downloads-section">Go to Downloads</a>
+                <a href="#recommendations">Professional Praise</a>
+                <a href="#blogs">Blogs</a>
+                <a href="#projects-section">Projects</a> <!-- New link for Projects -->
+                <a href="#latest-linkedin-post">LinkedIn Presence</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
+        
 
         <h1 data-aos="zoom-in">Kishor Sankaran - Document Management Expert</h1>
 
@@ -1203,6 +1290,7 @@
             const coverPage = document.getElementById('cover-page');
             const mainContent = document.getElementById('main-content');
             const detailContainers = document.querySelectorAll('.work-detail-container'); // All detail sections
+            const navMenu = document.querySelector('.main-heading-buttons');
 
             // Function to show main content and hide cover
             function enterWebsite() {
@@ -1217,6 +1305,7 @@
             // Function to show a specific work experience detail
             window.showWorkExperienceDetail = function(companyId) {
                 mainContent.style.display = 'none'; // Hide main content
+                navMenu.classList.remove('visible'); // Hide the navigation menu on mobile when a detail page is shown
                 detailContainers.forEach(container => {
                     container.style.display = 'none'; // Hide all detail containers first
                 });
@@ -1239,7 +1328,7 @@
                 // Scroll back to the "Work Experience" section
                 const workExperienceSection = document.getElementById('work-experience');
                 if (workExperienceSection) {
-                    const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
+                    const headerHeight = document.querySelector(".mobile-nav-container").offsetHeight;
                     const targetOffset = workExperienceSection.getBoundingClientRect().top + window.scrollY;
                     const yOffset = targetOffset - headerHeight - 10;
                     window.scrollTo({
@@ -1250,6 +1339,10 @@
                 AOS.refresh(); // Refresh AOS for animations on the now visible main content
             };
 
+            // Function to toggle the mobile navigation menu
+            window.toggleNav = function() {
+                navMenu.classList.toggle('visible');
+            };
 
             // Click anywhere on the cover page to enter
             coverPage.addEventListener('click', enterWebsite);
@@ -1262,9 +1355,10 @@
                     const targetId = button.getAttribute("href");
                     if (targetId && targetId.startsWith("#")) {
                         event.preventDefault(); // Prevent default link behavior for smooth scroll
+                        navMenu.classList.remove('visible'); // Hide the menu after clicking a link
                         const targetElement = document.querySelector(targetId);
                         if (targetElement) {
-                            const headerHeight = document.querySelector(".main-heading-buttons").offsetHeight;
+                            const headerHeight = document.querySelector(".mobile-nav-container").offsetHeight;
                             const targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
                             const yOffset = targetOffset - headerHeight - 10;
 
